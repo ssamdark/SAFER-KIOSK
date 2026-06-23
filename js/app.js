@@ -5,8 +5,7 @@ function fitKiosk() {
   const vw = window.innerWidth;
   if (vw < 1080) {
     const scale = vw / 1080;
-    const offset = (vw - 1080) / 2; // 음수값: 왼쪽으로 당겨서 중앙 정렬
-    kiosk.style.transform = `scale(${scale}) translateX(${offset / scale}px)`;
+    kiosk.style.transform = `scale(${scale})`;
     kiosk.style.transformOrigin = 'top left';
     document.body.style.height = Math.ceil(1920 * scale) + 'px';
   } else {
