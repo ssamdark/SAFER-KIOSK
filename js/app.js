@@ -7,10 +7,14 @@ function fitKiosk() {
     const scale = vw / 1080;
     kiosk.style.transform = `scale(${scale})`;
     kiosk.style.transformOrigin = 'top left';
+    kiosk.style.marginLeft = '0';
+    kiosk.style.marginRight = '0';
     document.body.style.height = Math.ceil(1920 * scale) + 'px';
   } else {
     kiosk.style.transform = '';
     kiosk.style.transformOrigin = '';
+    kiosk.style.marginLeft = '';
+    kiosk.style.marginRight = '';
     document.body.style.height = '';
   }
 }
