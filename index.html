@@ -36,15 +36,6 @@
   <!-- ============== MAIN ============== -->
   <main class="main">
 
-    <!-- 상단 2단: 날씨(좌) + 불안전행동 감시 신호등(우) -->
-    <!--
-    상단 3대 메뉴 버튼 (추후 삽입 예정)
-    <div class="top-menu">
-      <button class="top-menu-btn" onclick="openPolicy('management')"><span class="top-menu-label">안전보건<br>경영방침</span></button>
-      <button class="top-menu-btn" onclick="openPolicy('law')"><span class="top-menu-label">산업안전보건<br>법령요지</span></button>
-      <button class="top-menu-btn" onclick="openContact()"><span class="top-menu-label">비상연락망</span></button>
-    </div>
-    -->
     <!-- ============== HERO ============== -->
     <section class="hero-section">
       <div class="hero-dots">
@@ -57,7 +48,7 @@
     </section>
 
     <!-- 불안전행동 감시 신호등 -->
-    <section class="behavior-section" style="flex-shrink:0;">
+    <section class="behavior-section">
       <div class="card env-behavior">
         <div class="behavior-head">
           <div class="behavior-head-left">
@@ -74,11 +65,11 @@
               </ul>
             </div>
           </div>
-          <div class="behavior-head-right" style="display:flex;align-items:center;gap:16px;">
+          <div class="behavior-head-right">
             <button type="button" class="cctv-btn-item active" data-cctv="1" onclick="bhSelectCctv('1', this)">CCTV-1</button>
             <button type="button" class="cctv-btn-item" data-cctv="2" onclick="bhSelectCctv('2', this)">CCTV-2</button>
             <button type="button" class="cctv-btn-item" data-cctv="3" onclick="bhSelectCctv('3', this)">CCTV-3</button>
-            <button type="button" title="초기화" onclick="resetBehavior()" class="icon-btn-ghost" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#fff;cursor:pointer;padding:0;margin-left:4px;"><i class="ri-refresh-line" style="font-size:18px;"></i></button>
+            <button type="button" title="초기화" onclick="resetBehavior()" class="icon-btn-ghost bh-reset-btn"><i class="ri-refresh-line"></i></button>
           </div>
         </div>
 
@@ -143,15 +134,14 @@
     </section>
 
     <!-- 사업장(현장) 온습도 현황 (전체폭) -->
+    <section class="site-env-section">
       <div class="card site-env-card">
         <div class="behavior-head">
-          <div class="behavior-head-left" style="align-items:baseline;">
+          <div class="behavior-head-left behavior-head-left--baseline">
             <span class="behavior-title">사업장 · 현장 온습도 현황</span>
           </div>
           <div class="behavior-head-right">
-            <button type="button" style="width:160px;height:40px;padding:0;border-radius:4px;font-size:15px;font-family:'Pretendard',sans-serif;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.85);cursor:pointer;">
-              <span>비상연락망</span>
-            </button>
+            <button type="button" class="emergency-contact-btn">비상연락망</button>
           </div>
         </div>
 
@@ -168,24 +158,6 @@
                 <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
               </filter>
             </defs>
-
-            <!-- 구역 레이블 -->
-            <!--
-            <g font-family="Pretendard, sans-serif" font-size="14" font-weight="600" text-anchor="middle" filter="url(#label-shadow)">
-              <rect x="78" y="98" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
-              <text x="122" y="116" fill="#2A60CC">부스 A</text>
-              <rect x="78" y="278" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
-              <text x="122" y="296" fill="#2A60CC">부스 B</text>
-              <rect x="405" y="90" width="130" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
-              <text x="470" y="108" fill="#2A60CC">중앙 전시홀</text>
-              <rect x="740" y="98" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
-              <text x="784" y="116" fill="#2A60CC">부스 C</text>
-              <rect x="740" y="278" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
-              <text x="784" y="296" fill="#2A60CC">부스 D</text>
-              <rect x="415" y="338" width="110" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
-              <text x="470" y="356" fill="#2A60CC">세미나실</text>
-            </g>
-            -->
 
             <!-- 현재 위치 (비상대피로와 동일) -->
             <g>
@@ -276,22 +248,18 @@
       <button class="facility-btn fac-evac" onclick="openEvac()">
         <img src="images/btn_01.png" class="facility-img" alt=""/>
         <span class="facility-label">비상대피로</span>
-        <!-- <span class="facility-sub">emergency<br>evacuation route</span> -->
       </button>
       <button class="facility-btn fac-aid" onclick="openFacility('aid')">
         <img src="images/btn_02.png" class="facility-img" alt=""/>
         <span class="facility-label">응급 구급함</span>
-        <!-- <span class="facility-sub">emergency<br>first aid kit</span> -->
       </button>
       <button class="facility-btn fac-fire" onclick="openFacility('fire')">
         <img src="images/btn_03.png" class="facility-img" alt=""/>
         <span class="facility-label">소화기 위치</span>
-        <!-- <span class="facility-sub">fire extinguisher<br>location</span> -->
       </button>
       <button class="facility-btn fac-aed" onclick="openFacility('aed')">
         <img src="images/btn_04.png" class="facility-img" alt=""/>
         <span class="facility-label">AED 설치</span>
-        <!-- <span class="facility-sub">AED<br>installation</span> -->
       </button>
     </nav>
 
@@ -305,16 +273,6 @@
       <button class="facility-btn-sq sq-teal"><span class="facility-label">산업안전보건<br>법령요지</span></button>
     </nav>
 
-    <!-- 관리 기능 버튼 2개 (공정관리 / 현장 특이사항)
-    <nav class="mgmt-menu">
-      <button class="mgmt-btn mgmt-process" onclick="openProcessMgmt()">
-        <span class="mgmt-label">공정(작업)관리</span>
-      </button>
-      <button class="mgmt-btn mgmt-issue" onclick="openIssueMgmt()">
-        <span class="mgmt-label">현장 특이사항 관리</span>
-      </button>
-    </nav>-->
-
   </main>
 
   <!-- ============== FOOTER ============== -->
@@ -323,7 +281,7 @@
       <div class="footer-left">
         <img src="images/footer_v.png" class="footer-img" alt="되고시스템"/>
       </div>
-      <span class="footer-brand" style="margin-left:auto;margin-right:40px;">되고시스템 <em>DUEGOSYSTEM</em> v 4. 7. 2</span>
+      <span class="footer-brand">되고시스템 <em>DUEGOSYSTEM</em> v 4. 7. 2</span>
     </div>
   </footer>
 
