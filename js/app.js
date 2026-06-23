@@ -64,8 +64,8 @@ function openCCTV() {
   document.getElementById('cctvOverlay').classList.add('open');
 }
 function closeCCTV() {
+  document.querySelectorAll('.cctv-btn-item').forEach(b => b.classList.remove('monitoring'));
   document.getElementById('cctvOverlay').classList.remove('open');
-  // src를 비워 재생 완전 정지 (소리/리소스 차단)
   const frame = document.getElementById('cctvFrame');
   if (frame) frame.src = '';
 }
@@ -334,10 +334,8 @@ function openFacility(type) {
 // ===== 심박 모니터링 =====
 const krNames = ['김*현','이*준','박*후','최*재','정*진','강*준','조*우','윤*성','임*호','한*경','오*민','신*찬'];
 function openHeartRate(region, count) {
-  const sub = document.getElementById('hrSub');
   const grid = document.getElementById('hrGrid');
   const n = Math.min(count || 1, 8); // 표시 최대 8명
-  sub.textContent = region + ' · 스마트워치 착용자 ' + n + '명';
   let html = '';
   for (let i = 0; i < n; i++) {
     // 심박 60~140 랜덤
@@ -357,7 +355,6 @@ function openHeartRate(region, count) {
         </div>
         <div style="text-align:right;">
           <div class="hr-bpm">
-            <svg class="hr-pulse-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="color:inherit;"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
             <span class="hr-bpm-val">${bpm}</span><span class="hr-bpm-unit">BPM</span>
           </div>
         </div>
@@ -369,9 +366,7 @@ function openHeartRate(region, count) {
 
 // 스마트워치 개인 (공정 상세에서 호출) - 1명 정보
 function openWatchWorker(name, watchId, proc) {
-  const sub = document.getElementById('hrSub');
   const grid = document.getElementById('hrGrid');
-  sub.textContent = proc + ' · ' + name;
   const bpm = 78 + Math.floor(Math.random() * 50);
   let cls = '', status = '정상';
   if (bpm >= 130) { cls = 'danger'; status = '위험'; }
@@ -386,7 +381,6 @@ function openWatchWorker(name, watchId, proc) {
       </div>
       <div style="text-align:right;">
         <div class="hr-bpm">
-          <svg class="hr-pulse-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
           <span class="hr-bpm-val">${bpm}</span><span class="hr-bpm-unit">BPM</span>
         </div>
       </div>

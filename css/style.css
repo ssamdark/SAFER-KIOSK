@@ -334,8 +334,7 @@
 .cctv-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.35);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.65);
   z-index: 1002;
   display: none;
   align-items: center;
@@ -343,22 +342,34 @@
   padding: 60px;
 }
 .cctv-overlay.open { display: flex; }
-.cctv-modal {
+.cctv-modal-wrap, .modal-wrap {
+  position: relative;
   width: 100%;
   max-width: 920px;
+}
+.modal-wrap > .modal-box { max-width: 100%; }
+.cctv-modal {
+  width: 100%;
   background: #FFFFFF;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-xl);
-  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 .cctv-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 28px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(0, 217, 255, 0.04);
+  height: 80px; padding: 0 24px;
+  background: #ffffff;
+  position: relative;
+}
+.cctv-head::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 24px; right: 24px;
+  height: 2px;
+  background: #000000;
 }
 .cctv-head-left { display: flex; align-items: center; gap: 14px; }
 .cctv-head-icon {
@@ -371,27 +382,32 @@
 }
 .cctv-head-icon svg { width: 26px; height: 26px; }
 .cctv-head-title {
+  font-family: 'Pretendard', sans-serif;
   font-size: 22px; font-weight: 800; color: var(--t-1);
   letter-spacing: -0.3px;
 }
 .cctv-head-sub {
+  font-family: 'Pretendard', sans-serif;
   font-size: 13px; color: var(--t-3);
-  margin-top: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.5px;
+  margin-left: 12px;
+  letter-spacing: 0.3px;
 }
 .cctv-close {
-  width: 48px; height: 48px;
-  border-radius: 10px;
-  background: rgba(15, 23, 42, 0.05);
-  border: 1px solid var(--line);
-  color: var(--t-2);
+  position: absolute;
+  top: -18px; right: -18px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(60, 60, 60, 0.85);
+  border: none;
+  color: #fff;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background 0.15s;
+  z-index: 10;
 }
+.cctv-close:hover { background: rgba(80, 80, 80, 0.95); }
 .cctv-close:active { transform: scale(0.92); }
-.cctv-close svg { width: 24px; height: 24px; }
+.cctv-close svg { width: 20px; height: 20px; }
 
 .cctv-body { padding: 24px 28px 28px; }
 .cctv-screen {
@@ -534,9 +550,8 @@
 
 /* ===== Generic modal (심박/MSDS/사진) ===== */
 .modal-overlay {
-  position: absolute; inset: 0;
-  background: rgba(15, 23, 42, 0.35);
-  backdrop-filter: blur(10px);
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.65);
   z-index: 1000;
   display: none;
   align-items: center; justify-content: center;
@@ -547,19 +562,26 @@
   width: 100%;
   max-width: 880px;
   max-height: calc(100% - 40px);
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-xl);
-  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   display: flex; flex-direction: column;
 }
 .modal-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 28px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(0, 217, 255, 0.04);
+  height: 80px; padding: 0 28px;
+  background: #ffffff;
   flex-shrink: 0;
+  position: relative;
+}
+.modal-head::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 24px; right: 24px;
+  height: 2px;
+  background: #000000;
 }
 .modal-head-left { display: flex; align-items: center; gap: 14px; }
 .modal-head-icon {
@@ -572,19 +594,20 @@
 .modal-head-icon.msds { background: rgba(255,111,44,0.12); border: 1px solid rgba(255,111,44,0.3); color: var(--orange); }
 .modal-head-icon.photo { background: rgba(0,217,255,0.12); border: 1px solid rgba(0,217,255,0.3); color: var(--cyan); }
 .modal-head-icon.watch { background: rgba(139,124,255,0.12); border: 1px solid rgba(139,124,255,0.3); color: var(--violet); }
-.modal-head-title { font-size: 22px; font-weight: 800; color: var(--t-1); letter-spacing: -0.3px; }
+.modal-head-title { font-family: 'Pretendard', sans-serif; font-size: 22px; font-weight: 800; color: var(--t-1); letter-spacing: -0.3px; }
 .modal-head-sub {
-  font-size: 13px; color: var(--t-3); margin-top: 3px;
-  font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 13px; color: var(--t-3); margin-left: 12px; letter-spacing: 0.3px;
 }
 .modal-close {
-  width: 48px; height: 48px; border-radius: 10px;
-  background: rgba(15, 23, 42, 0.05); border: 1px solid var(--line);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(60, 60, 60, 0.1); border: 1px solid var(--line);
   color: var(--t-2); display: flex; align-items: center; justify-content: center;
   cursor: pointer; transition: all 0.15s; flex-shrink: 0;
 }
+.modal-close:hover { background: rgba(60, 60, 60, 0.15); }
 .modal-close:active { transform: scale(0.92); }
-.modal-close svg { width: 24px; height: 24px; }
+.modal-close svg { width: 20px; height: 20px; }
 .modal-body { padding: 24px 28px 28px; overflow-y: auto; }
 
 /* 비상대피로 블루프린트 */
@@ -669,7 +692,7 @@
   border: 1px solid var(--line); border-radius: var(--r-md);
 }
 .env-detail-card svg { width: 34px; height: 34px; }
-.env-detail-val { font-family: 'Oswald', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; }
+.env-detail-val { font-family: 'Oswald', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #192A84; }
 .env-detail-val small { font-size: 18px; opacity: 0.7; margin-left: 2px; }
 .env-detail-lbl { font-size: 14px; color: var(--t-2); font-weight: 600; }
 .env-detail-range { font-size: 12px; color: var(--t-3); font-family: 'JetBrains Mono', monospace; }
@@ -797,10 +820,9 @@
   background: var(--bg-card-hi);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
-  border-left: 3px solid var(--green);
 }
-.hr-worker.warn { border-left-color: var(--amber); background: rgba(255,184,0,0.04); }
-.hr-worker.danger { border-left-color: var(--red); background: rgba(255,59,71,0.05); }
+.hr-worker.warn { background: rgba(255,184,0,0.04); }
+.hr-worker.danger { background: rgba(255,59,71,0.05); }
 .hr-avatar {
   width: 44px; height: 44px; border-radius: 50%;
   background: linear-gradient(135deg, var(--violet), #4a3e99);
@@ -810,13 +832,13 @@
 }
 .hr-worker-info { flex: 1; min-width: 0; }
 .hr-worker-name { font-size: 15px; font-weight: 700; color: var(--t-1); }
-.hr-worker-meta { font-size: 11px; color: var(--t-3); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+.hr-worker-meta { font-size: 11px; color: var(--t-3); font-family: 'Pretendard', sans-serif; margin-top: 2px; }
 .hr-bpm { display: flex; align-items: baseline; gap: 4px; }
 .hr-bpm-val { font-family: 'Oswald', sans-serif; font-size: 30px; font-weight: 700; line-height: 1; }
 .hr-bpm-unit { font-size: 12px; color: var(--t-3); font-weight: 600; }
-.hr-worker .hr-bpm-val { color: var(--green); }
-.hr-worker.warn .hr-bpm-val { color: var(--amber); }
-.hr-worker.danger .hr-bpm-val { color: var(--red); }
+.hr-worker .hr-bpm-val { color: #192A84; }
+.hr-worker.warn .hr-bpm-val { color: #192A84; }
+.hr-worker.danger .hr-bpm-val { color: #192A84; }
 .hr-status-badge {
   font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px;
   margin-top: 4px; display: inline-block;
@@ -2368,6 +2390,7 @@
   border: 1px solid rgba(255,255,255,0.25);
   border-radius: 4px;
   cursor: pointer;
+  outline: none;
   transition: all 0.15s;
 }
 .cctv-btn-item.active {
@@ -2377,6 +2400,7 @@
   font-weight: 700;
 }
 .cctv-btn-item:hover { background: rgba(255,255,255,0.25); }
+.cctv-btn-item:focus, .cctv-btn-item:focus-visible { outline: none; text-decoration: none; box-shadow: none; }
 /* CCTV LIVE 모니터링 인디케이터 (현재 신호등을 대변하는 CCTV) */
 .cctv-live-ind {
   width: 0; height: 0; border-radius: 50%;
@@ -2386,9 +2410,9 @@
   flex-shrink: 0;
 }
 .cctv-btn-item.monitoring {
-  border-color: var(--red);
-  color: var(--t-1);
-  background: rgba(255,59,71,0.08);
+  border-color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.2);
 }
 .cctv-btn-item.monitoring .cctv-live-ind {
   width: 8px; height: 8px;
