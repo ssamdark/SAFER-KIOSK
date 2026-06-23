@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, initial-scale=1.0, user-scalable=no" />
+<title>되고세이퍼 | 통합 안전보건 관제 시스템</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="kiosk">
+
+  <!-- ============== STATUS BAR ============== -->
+  <header class="statusbar">
+    <img src="images/head_v.png" class="sb-head-img" alt=""/>
+    <div class="sb-site-name">고양시 사업장</div>
+    <div class="stat-chip">
+      <span class="stat-dot"></span>
+      <span class="stat-label">SYSTEM</span>
+      <span class="stat-val">정상</span>
+    </div>
+    <div class="sb-right">
+      <img src="images/logo_v.png" class="statusbar-logo" alt="로고" />
+    </div>
+  </header>
+
+  <!-- ============== MAIN ============== -->
+  <main class="main">
+
+    <!-- 불안전행동 감시 신호등 -->
+    <section class="top-content-row">
+      <!-- 불안전행동 감시 신호등 -->
+      <section class="behavior-section">
+      <div class="card env-behavior">
+        <div class="behavior-head">
+          <div class="behavior-head-left">
+            <span class="behavior-title">불안전행동 감시 신호등</span>
+            <div class="bps-wrap" id="bhProcSelect">
+              <button class="bps-trigger" id="bhProcTrigger" type="button" onclick="event.stopPropagation();document.getElementById('bhProcSelect').classList.toggle('open');">
+                <span class="bps-label" id="bhProcLabel">정밀가공 · PRC-19</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <ul class="bps-dropdown" id="bhProcDropdown" onclick="event.stopPropagation();">
+                <li class="bps-option active" data-value="정밀가공 공정 · PRC-19" data-cctv="1" onclick="bhPickProc(this)">정밀가공 · PRC-19</li>
+                <li class="bps-option" data-value="용접 공정 · PRC-07" data-cctv="2" onclick="bhPickProc(this)">용접 · PRC-07</li>
+                <li class="bps-option" data-value="도장 공정 · PRC-12" data-cctv="3" onclick="bhPickProc(this)">도장 · PRC-12</li>
+              </ul>
+            </div>
+          </div>
+          <div class="behavior-head-right" style="display:flex;align-items:center;gap:16px;">
+            <span class="bh-cctv-txt cctv-btn-item active" data-cctv="1" onclick="bhSelectCctv('1', this)" style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;color:#fff;cursor:pointer;">CCTV-1</span>
+            <span class="bh-cctv-txt cctv-btn-item" data-cctv="2" onclick="bhSelectCctv('2', this)" style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:rgba(255,255,255,0.45);cursor:pointer;">CCTV-2</span>
+            <span class="bh-cctv-txt cctv-btn-item" data-cctv="3" onclick="bhSelectCctv('3', this)" style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:rgba(255,255,255,0.45);cursor:pointer;">CCTV-3</span>
+            <button type="button" title="초기화" class="icon-btn-ghost" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#fff;cursor:pointer;padding:0;margin-left:4px;"><i class="ri-refresh-line" style="font-size:18px;"></i></button>
+          </div>
+        </div>
+
+        <!-- 신호등 행렬 -->
+        <div class="bh-matrix" id="bhMatrix">
+          <div class="bh-matrix-head">
+            <span></span>
+            <span class="bhm-col-name">감시 항목</span>
+            <span class="bhm-col-lamp">관심</span>
+            <span class="bhm-col-lamp">주의</span>
+            <span class="bhm-col-lamp">경고</span>
+            <span class="bhm-col-lamp">위험</span>
+          </div>
+          <div class="bh-matrix-row" data-active="3">
+            <button type="button" class="icon-btn-ghost bhm-edit" title="수정"><i class="ri-edit-line"></i></button>
+            <span class="bhm-name">모자(안전모) 벗는 행동</span>
+            <span class="bhm-lamp interest"></span>
+            <span class="bhm-lamp caution"></span>
+            <span class="bhm-lamp warning"></span>
+            <span class="bhm-lamp danger on"></span>
+          </div>
+          <div class="bh-matrix-row" data-active="1">
+            <button type="button" class="icon-btn-ghost bhm-edit" title="수정"><i class="ri-edit-line"></i></button>
+            <span class="bhm-name">스피커(설비) 만지는 행동</span>
+            <span class="bhm-lamp interest"></span>
+            <span class="bhm-lamp caution on"></span>
+            <span class="bhm-lamp warning"></span>
+            <span class="bhm-lamp danger"></span>
+          </div>
+          <div class="bh-matrix-row" data-active="0">
+            <button type="button" class="icon-btn-ghost bhm-edit" title="수정"><i class="ri-edit-line"></i></button>
+            <span class="bhm-name">위험지역 무단횡단 행동</span>
+            <span class="bhm-lamp interest on"></span>
+            <span class="bhm-lamp caution"></span>
+            <span class="bhm-lamp warning"></span>
+            <span class="bhm-lamp danger"></span>
+          </div>
+          <div class="bh-matrix-row" data-active="2">
+            <button type="button" class="icon-btn-ghost bhm-edit" title="수정"><i class="ri-edit-line"></i></button>
+            <span class="bhm-name">사다리 혼자 올라가는 행동</span>
+            <span class="bhm-lamp interest"></span>
+            <span class="bhm-lamp caution"></span>
+            <span class="bhm-lamp warning on"></span>
+            <span class="bhm-lamp danger"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    </section><!-- /top-content-row -->
+
+    <!-- 사업장(현장) 온습도 현황 (전체폭) -->
+      <div class="card site-env-card">
+        <div class="behavior-head">
+          <div class="behavior-head-left">
+            <span class="behavior-title">사업장 · 현장 온습도 현황</span>
+            <span class="site-env-sub">전시 부스 11m × 6m · ISOMETRIC VIEW</span>
+          </div>
+          <div class="behavior-head-right">
+            <button class="icon-btn-ghost" type="button" style="padding:0 32px;height:36px;border-radius:2px;font-size:15px;font-family:'Pretendard',sans-serif;">
+              <span>비상연락망</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="se-matrix-head">
+          <button class="sem-tab active" data-se="temp" onclick="switchSiteView('env', this)">
+            온습도계
+          </button>
+          <button class="sem-tab" data-se="humi" onclick="switchSiteView('cctv', this)">
+            CCTV
+          </button>
+          <button class="sem-tab" data-se="stat" onclick="switchSiteView('hr', this)">
+            심박
+          </button>
+        </div>
+
+        <div class="site-env-body">
+        <div class="site-blueprint">
+          <svg viewBox="0 0 900 630" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="label-shadow" x="-10%" y="-20%" width="120%" height="160%">
+                <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+              </filter>
+            </defs>
+
+            <!-- 구역 레이블 -->
+            <!--
+            <g font-family="Pretendard, sans-serif" font-size="14" font-weight="600" text-anchor="middle" filter="url(#label-shadow)">
+              <rect x="78" y="98" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
+              <text x="122" y="116" fill="#2A60CC">부스 A</text>
+              <rect x="78" y="278" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
+              <text x="122" y="296" fill="#2A60CC">부스 B</text>
+              <rect x="405" y="90" width="130" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
+              <text x="470" y="108" fill="#2A60CC">중앙 전시홀</text>
+              <rect x="740" y="98" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
+              <text x="784" y="116" fill="#2A60CC">부스 C</text>
+              <rect x="740" y="278" width="88" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
+              <text x="784" y="296" fill="#2A60CC">부스 D</text>
+              <rect x="415" y="338" width="110" height="26" rx="13" fill="white" fill-opacity="0.9" stroke="#2A60CC" stroke-width="1.5"/>
+              <text x="470" y="356" fill="#2A60CC">세미나실</text>
+            </g>
+            -->
+
+            <!-- 현재 위치 (비상대피로와 동일) -->
+            <g>
+              <circle cx="580" cy="530" r="13" fill="#ffffff" opacity="0.2">
+                <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="580" cy="530" r="8" fill="#ffffff"/>
+              <text x="580" y="558" text-anchor="middle" fill="#ffffff" font-family="Pretendard, sans-serif" font-size="14" font-weight="400">현재 위치</text>
+            </g>
+
+            <!-- 온습도계 뷰 (각 구역 벽면에 분산 배치) -->
+            <g id="siteEnvMarkers">
+              <g class="ai-marker" style="cursor:pointer;" onclick="openEnvDetail('TH-01','부스 A · 정밀가공 시연존')">
+                <circle cx="175" cy="320" r="22" fill="#FF9000"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="175" cy="320" r="18" fill="#FF9000" fill-opacity="0.18"/>
+                <image x="161" y="306" width="28" height="28" href="images/icon_Thermometer.svg"/>
+              </g>
+              <g class="ai-marker" style="cursor:pointer;" onclick="openEnvDetail('TH-02','부스 C · 절단·용접 시연존')">
+                <circle cx="775" cy="330" r="22" fill="#FF9000"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="775" cy="330" r="18" fill="#FF9000" fill-opacity="0.18"/>
+                <image x="761" y="316" width="28" height="28" href="images/icon_Thermometer.svg"/>
+              </g>
+              <g class="ai-marker" style="cursor:pointer;" onclick="openEnvDetail('TH-03','중앙 전시홀')">
+                <circle cx="380" cy="360" r="22" fill="#FF9000"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="380" cy="360" r="18" fill="#FF9000" fill-opacity="0.18"/>
+                <image x="366" y="346" width="28" height="28" href="images/icon_Thermometer.svg"/>
+              </g>
+            </g>
+
+            <!-- CCTV 뷰 (천장 모서리/요충지에 분산, 초기 숨김) -->
+            <g id="siteCctvMarkers" style="display:none;">
+              <g class="ai-marker" style="cursor:pointer;" onclick="openCCTVFor('CAM-03 · 부스 A 정밀가공')">
+                <circle cx="150" cy="185" r="22" fill="#6628E1"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="150" cy="185" r="18" fill="#6628E1" fill-opacity="0.18"/>
+                <image x="136" y="171" width="28" height="28" href="images/icon_cctv.svg"/>
+              </g>
+              <g class="ai-marker" style="cursor:pointer;" onclick="openCCTVFor('CAM-04 · 부스 C 절단·용접')">
+                <circle cx="790" cy="185" r="22" fill="#6628E1"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="790" cy="185" r="18" fill="#6628E1" fill-opacity="0.18"/>
+                <image x="776" y="171" width="28" height="28" href="images/icon_cctv.svg"/>
+              </g>
+              <g class="ai-marker" style="cursor:pointer;" onclick="openCCTVFor('CAM-05 · 중앙 전시홀')">
+                <circle cx="525" cy="225" r="22" fill="#6628E1"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="525" cy="225" r="18" fill="#6628E1" fill-opacity="0.18"/>
+                <image x="511" y="211" width="28" height="28" href="images/icon_cctv.svg"/>
+              </g>
+            </g>
+
+            <!-- 심박 뷰 (작업자 위치 분산, 초기 숨김) -->
+            <g id="siteHrMarkers" style="display:none;">
+              <g class="ai-marker" style="cursor:pointer;" onclick="openWatchWorker('이*학','WATCH-01','부스 A · 정밀가공 시연존')">
+                <circle cx="180" cy="330" r="22" fill="#F67676"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="180" cy="330" r="18" fill="#F67676" fill-opacity="0.18"/>
+                <image x="166" y="316" width="28" height="28" href="images/icon_heart.svg"/>
+              </g>
+              <g class="ai-marker" style="cursor:pointer;" onclick="openWatchWorker('전*조','WATCH-02','부스 C · 절단·용접 시연존')">
+                <circle cx="780" cy="315" r="22" fill="#F67676"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="780" cy="315" r="18" fill="#F67676" fill-opacity="0.18"/>
+                <image x="766" y="301" width="28" height="28" href="images/icon_heart.svg"/>
+              </g>
+              <g class="ai-marker" style="cursor:pointer;" onclick="openWatchWorker('김*수','WATCH-03','중앙 전시홀')">
+                <circle cx="500" cy="355" r="22" fill="#F67676"><animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/></circle>
+                <circle cx="500" cy="355" r="18" fill="#F67676" fill-opacity="0.18"/>
+                <image x="486" y="341" width="28" height="28" href="images/icon_heart.svg"/>
+              </g>
+            </g>
+
+            <!-- 범례 -->
+            <foreignObject x="0" y="588" width="888" height="32">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;justify-content:flex-end;align-items:center;height:32px;">
+                <div style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.15);border:none;border-radius:2px;padding:0 12px;height:28px;font-family:Pretendard,sans-serif;font-size:12px;font-weight:400;color:rgba(255,255,255,0.85);">
+                  <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#FF9000;flex-shrink:0;"></span>온습도계</span>
+                  <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#6628E1;flex-shrink:0;"></span>CCTV</span>
+                  <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#BE2929;flex-shrink:0;"></span>심박(작업자)</span>
+                </div>
+              </div>
+            </foreignObject>
+
+          </svg>
+        </div><!-- /site-blueprint -->
+        </div><!-- /site-env-body -->
+      </div><!-- /site-env-card -->
+    </section>
+
+    <!-- 안전시설 위치 메뉴 (4개) -->
+    <nav class="facility-menu">
+      <button class="facility-btn fac-evac" onclick="openEvac()">
+        <img src="images/btn_01.png" class="facility-img" alt=""/>
+        <span class="facility-label">비상대피로</span>
+        <span class="facility-sub">emergency<br>evacuation route</span>
+      </button>
+      <button class="facility-btn fac-aid" onclick="openFacility('aid')">
+        <img src="images/btn_02.png" class="facility-img" alt=""/>
+        <span class="facility-label">응급 구급함</span>
+        <span class="facility-sub">emergency<br>first aid kit</span>
+      </button>
+      <button class="facility-btn fac-fire" onclick="openFacility('fire')">
+        <img src="images/btn_03.png" class="facility-img" alt=""/>
+        <span class="facility-label">소화기 위치</span>
+        <span class="facility-sub">fire extinguisher<br>location</span>
+      </button>
+      <button class="facility-btn fac-aed" onclick="openFacility('aed')">
+        <img src="images/btn_04.png" class="facility-img" alt=""/>
+        <span class="facility-label">AED 설치</span>
+        <span class="facility-sub">AED<br>installation</span>
+      </button>
+    </nav>
+
+    <!-- 관리 기능 버튼 2개 (공정관리 / 현장 특이사항)
+    <nav class="mgmt-menu">
+      <button class="mgmt-btn mgmt-process" onclick="openProcessMgmt()">
+        <span class="mgmt-label">공정(작업)관리</span>
+      </button>
+      <button class="mgmt-btn mgmt-issue" onclick="openIssueMgmt()">
+        <span class="mgmt-label">현장 특이사항 관리</span>
+      </button>
+    </nav>-->
+
+  </main>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="footer">
+    <!-- ============== QUICK ACTION BAR ============== -->
+    <div style="width:100%;height:80px;background:#2A60CC;display:flex;align-items:center;gap:0;flex-shrink:0;box-shadow:0 -6px 12px rgba(0,0,0,0.15);">
+      <button type="button" class="qab-btn" style="flex:1;height:100%;background:transparent;border:none;border-right:1px solid rgba(255,255,255,0.15);color:#ffffff;font-family:'Pretendard',sans-serif;font-size:18px;cursor:pointer;">MSDS</button>
+      <button type="button" class="qab-btn" style="flex:1;height:100%;background:transparent;border:none;border-right:1px solid rgba(255,255,255,0.15);color:#ffffff;font-family:'Pretendard',sans-serif;font-size:18px;cursor:pointer;">위험성평가</button>
+      <button type="button" class="qab-btn" style="flex:1;height:100%;background:transparent;border:none;border-right:1px solid rgba(255,255,255,0.15);color:#ffffff;font-family:'Pretendard',sans-serif;font-size:18px;cursor:pointer;">공정관리</button>
+      <button type="button" class="qab-btn" style="flex:1;height:100%;background:transparent;border:none;color:#ffffff;font-family:'Pretendard',sans-serif;font-size:18px;cursor:pointer;">현장 특이사항 관리</button>
+    </div>
+    <div class="footer-bottom">
+    <div class="footer-left">
+      <img src="images/footer_v.png" class="footer-img" alt="되고시스템"/>
+    </div>
+    <span class="footer-brand" style="margin-left:auto;margin-right:40px;">되고시스템 <em>DUEGOSYSTEM</em> v 4. 7. 2</span>
+    <div style="display:flex;gap:16px;align-items:center;">
+      <button class="footer-policy-btn" type="button">안전보건경영방침</button>
+      <button class="footer-policy-btn" type="button">산업안전보건법령요지</button>
+    </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============== CCTV MODAL ============== -->
+<div class="cctv-overlay" id="cctvOverlay">
+  <div class="cctv-modal">
+    <div class="cctv-head">
+      <div class="cctv-head-left">
+        <div class="cctv-head-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7l13-3 1.5 5.5L3.5 12.5 2 7z"/>
+            <path d="M15 5.5l4-1 1 3.5-4 1"/>
+            <circle cx="8" cy="9" r="1.4" fill="currentColor" stroke="none"/>
+            <path d="M5 13v3a2 2 0 0 0 2 2h2"/>
+            <path d="M9 18v2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="cctv-head-title">실시간 CCTV</div>
+          <div class="cctv-head-sub" id="cctvHeadSub">정밀가공 공정 · PRC-19</div>
+        </div>
+      </div>
+      <button class="cctv-close" onclick="closeCCTV()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cctv-body">
+      <div class="cctv-screen">
+        <div class="cctv-rec">REC ● LIVE</div>
+        <div class="cctv-timestamp" id="cctvTime">2026-05-19 15:22:48</div>
+        <div class="cctv-loc-overlay">
+          <div class="cctv-loc-name" id="cctvLocName">CAM-03 · 정밀가공 라인</div>
+          <div class="cctv-loc-proc" id="cctvLocProc">정밀가공 공정 (PRC-19) · 도장작업실</div>
+        </div>
+        <!-- Fallback (영상 로드 전/실패 시 표시) -->
+        <div class="cctv-fallback">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+          </svg>
+          <div class="cctv-fallback-txt">영상 신호 연결 중...</div>
+        </div>
+        <!-- Live CCTV feed (YouTube embed) -->
+        <iframe id="cctvFrame" class="cctv-video"
+          src=""
+          title="CCTV Live"
+          frameborder="0"
+          allow="autoplay; encrypted-media; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+
+      <!-- Camera selector -->
+      <div class="cctv-cams">
+        <div class="cctv-cam-chip active" onclick="switchCam(this,'CAM-03 · 정밀가공 라인','정밀가공 공정 (PRC-19) · 도장작업실')">
+          <span class="cctv-cam-dot"></span>
+          <div class="cctv-cam-info">
+            <div class="cctv-cam-id">CAM-03</div>
+            <div class="cctv-cam-loc">정밀가공 라인 (도장작업실)</div>
+          </div>
+        </div>
+        <div class="cctv-cam-chip" onclick="switchCam(this,'CAM-04 · 절단기 작업존','정밀가공 공정 (PRC-19) · 절단기 작업존')">
+          <span class="cctv-cam-dot"></span>
+          <div class="cctv-cam-info">
+            <div class="cctv-cam-id">CAM-04</div>
+            <div class="cctv-cam-loc">절단기 작업존</div>
+          </div>
+        </div>
+        <div class="cctv-cam-chip" onclick="switchCam(this,'CAM-05 · 밀폐내부 작업존','정밀가공 공정 (PRC-19) · 밀폐내부 작업존')">
+          <span class="cctv-cam-dot"></span>
+          <div class="cctv-cam-info">
+            <div class="cctv-cam-id">CAM-05</div>
+            <div class="cctv-cam-loc">밀폐내부 작업존</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 심박계 MODAL ============== -->
+<div class="modal-overlay" id="hrOverlay" style="z-index:1002;">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon hr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">작업자 심박 모니터링</div>
+          <div class="modal-head-sub" id="hrSub">고양시사업장 · 스마트워치 착용자 8명</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('hrOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="hr-grid" id="hrGrid"><!-- JS injected --></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== MSDS MODAL ============== -->
+<div class="modal-overlay" id="msdsOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon msds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L15 8.5V2"/><path d="M8 2h8"/><line x1="7" y1="14" x2="17" y2="14"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">물질안전보건자료 (MSDS)</div>
+          <div class="modal-head-sub" id="msdsSub">화학물질 정보</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('msdsOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="msdsBody"><!-- JS injected --></div>
+  </div>
+</div>
+
+<!-- ============== 현장사진 MODAL ============== -->
+<div class="modal-overlay" id="photoOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">현장 사진</div>
+          <div class="modal-head-sub" id="photoSub">현장 이미지</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('photoOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="cctv-screen">
+        <div class="cctv-timestamp" id="photoTime">2026-05-19 15:22</div>
+        <div class="cctv-loc-overlay">
+          <div class="cctv-loc-name" id="photoLocName">현장 사진</div>
+          <div class="cctv-loc-proc">최근 촬영 이미지 · 작업허가서 첨부</div>
+        </div>
+        <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <rect width="640" height="360" fill="#11202e"/>
+          <rect y="240" width="640" height="120" fill="#0c1820"/>
+          <rect x="60" y="150" width="160" height="90" rx="4" fill="#2c3a4e"/>
+          <rect x="420" y="140" width="150" height="100" rx="4" fill="#283645"/>
+          <circle cx="300" cy="175" r="11" fill="#ffd400"/>
+          <rect x="289" y="185" width="22" height="38" rx="5" fill="#ff6f2c"/>
+          <rect x="292" y="221" width="7" height="22" fill="#2a3a52"/>
+          <rect x="302" y="221" width="7" height="22" fill="#2a3a52"/>
+          <text x="320" y="330" text-anchor="middle" fill="#3a4a60" font-family="monospace" font-size="12">SITE PHOTO · 최근 업로드</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 경영방침/법령요지 MODAL ============== -->
+<div class="modal-overlay" id="policyOverlay">
+  <div class="modal-box" style="max-width: 780px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(2, 132, 199, 0.1); border: 1px solid rgba(2, 132, 199, 0.3); color:var(--cyan); display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:26px; height:26px;">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div>
+          <div class="modal-head-title" id="policyTitle">안전보건 방침 및 요지</div>
+          <div class="modal-head-sub">DUEGOSAFER 공인 정책자료</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('policyOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="policyBody" style="padding: 28px 36px 36px;">
+      <!-- JS로 주입 -->
+    </div>
+  </div>
+</div>
+
+<!-- ============== 비상대피로 MODAL (블루프린트) ============== -->
+<div class="modal-overlay" id="evacOverlay">
+  <div class="modal-box" style="max-width: 1000px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(0,229,138,0.12);border:1px solid rgba(0,229,138,0.3);color:var(--green);">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <g fill="currentColor" stroke="none">
+              <circle cx="9" cy="4" r="1.9"/>
+              <path d="M8.3 6.4 L10.2 11.2 L8.8 11.8 L6.9 7z"/>
+              <path d="M8.6 7.2 L12.4 8.4 L12 9.8 L8.2 8.6z"/>
+              <path d="M7.6 7 L4.6 8.4 L4 7.1 L7 5.7z"/>
+              <path d="M9.3 10.8 L12.6 13.6 L11.5 14.9 L8.2 12.1z"/>
+              <path d="M9 11 L6 15.2 L4.7 14.3 L7.7 10.1z"/>
+            </g>
+            <path d="M15.5 3.5 h4 a0.6 0.6 0 0 1 0.6 0.6 v15.8 a0.6 0.6 0 0 1 -0.6 0.6 h-4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 18 h4.2"/><path d="M16.2 15.9 L18.3 18 L16.2 20.1"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="modal-head-title">비상대피로 안내도</div>
+          <div class="modal-head-sub">고양시사업장 · 전시장 1F · EMERGENCY EVACUATION ROUTE</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('evacOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="evac-blueprint">
+        <svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="bp-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M30 0H0V30" fill="none" stroke="rgba(15,23,42,0.06)" stroke-width="1"/>
+            </pattern>
+            <pattern id="bp-grid-lg" width="150" height="150" patternUnits="userSpaceOnUse">
+              <path d="M150 0H0V150" fill="none" stroke="rgba(15,23,42,0.1)" stroke-width="1.2"/>
+            </pattern>
+            <marker id="arrow-evac" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#00E58A"/>
+            </marker>
+          </defs>
+
+          <!-- 블루프린트 배경 -->
+          <rect width="900" height="560" fill="#F8FAFC"/>
+          <rect width="900" height="560" fill="url(#bp-grid)"/>
+          <rect width="900" height="560" fill="url(#bp-grid-lg)"/>
+
+          <!-- 외벽 -->
+          <rect x="60" y="50" width="780" height="460" fill="none" stroke="#64748B" stroke-width="3"/>
+
+          <!-- 내부 구획 (전시 부스/존) -->
+          <g stroke="#94A3B8" stroke-width="1.6" fill="none">
+            <!-- 좌측 부스열 -->
+            <rect x="100" y="90" width="150" height="120"/>
+            <rect x="100" y="230" width="150" height="120"/>
+            <!-- 중앙 메인 홀 -->
+            <rect x="300" y="90" width="300" height="200"/>
+            <!-- 우측 부스열 -->
+            <rect x="650" y="90" width="150" height="120"/>
+            <rect x="650" y="230" width="150" height="120"/>
+            <!-- 하단 -->
+            <rect x="300" y="330" width="300" height="120"/>
+          </g>
+          <!-- 부스 라벨 -->
+          <g fill="#475569" font-family="monospace" font-size="13" text-anchor="middle">
+            <text x="175" y="155">부스 A</text>
+            <text x="175" y="295">부스 B</text>
+            <text x="450" y="195">중앙 전시홀</text>
+            <text x="725" y="155">부스 C</text>
+            <text x="725" y="295">부스 D</text>
+            <text x="450" y="395">세미나실</text>
+          </g>
+
+          <!-- 현재 위치 (키오스크) -->
+          <g>
+            <circle cx="450" cy="470" r="13" fill="#ffffff" opacity="0.2">
+              <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="450" cy="470" r="8" fill="#ffffff"/>
+            <text x="450" y="498" text-anchor="middle" fill="#ffffff" font-family="Pretendard, sans-serif" font-size="14" font-weight="400">현재 위치</text>
+          </g>
+
+          <!-- ===== 비상대피 경로 (강조) ===== -->
+          <!-- 경로 1: 현재위치 → 좌측 비상구 -->
+          <path d="M450 470 L270 470 L160 470 L160 510" fill="none" stroke="#00E58A" stroke-width="5"
+                stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="14 10" marker-end="url(#arrow-evac)">
+            <animate attributeName="stroke-dashoffset" values="48;0" dur="1s" repeatCount="indefinite"/>
+          </path>
+          <!-- 경로 2: 현재위치 → 우측 비상구 -->
+          <path d="M450 470 L620 470 L740 470 L740 510" fill="none" stroke="#00E58A" stroke-width="5"
+                stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="14 10" marker-end="url(#arrow-evac)">
+            <animate attributeName="stroke-dashoffset" values="48;0" dur="1s" repeatCount="indefinite"/>
+          </path>
+          <!-- 경로 3: 상단 비상구 (우측 복도를 따라 우회) -->
+          <path d="M450 470 L625 470 L625 70 L450 70 L450 50" fill="none" stroke="#00E58A" stroke-width="5"
+                stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="14 10" marker-end="url(#arrow-evac)">
+            <animate attributeName="stroke-dashoffset" values="48;0" dur="1s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- ===== 비상구 표시 (EXIT) ===== -->
+          <!-- 좌측 하단 비상구 -->
+          <g>
+            <rect x="130" y="505" width="60" height="22" fill="#00E58A" rx="3"/>
+            <text x="160" y="521" text-anchor="middle" fill="#FFFFFF" font-family="Pretendard, sans-serif" font-size="13" font-weight="800">비상구</text>
+          </g>
+          <!-- 우측 하단 비상구 -->
+          <g>
+            <rect x="710" y="505" width="60" height="22" fill="#00E58A" rx="3"/>
+            <text x="740" y="521" text-anchor="middle" fill="#FFFFFF" font-family="Pretendard, sans-serif" font-size="13" font-weight="800">비상구</text>
+          </g>
+          <!-- 상단 비상구 -->
+          <g>
+            <rect x="420" y="33" width="60" height="22" fill="#00E58A" rx="3"/>
+            <text x="450" y="49" text-anchor="middle" fill="#FFFFFF" font-family="Pretendard, sans-serif" font-size="13" font-weight="800">비상구</text>
+          </g>
+
+          <!-- 범례 -->
+          <g font-family="Pretendard, sans-serif" font-size="12">
+            <line x1="80" y1="535" x2="115" y2="535" stroke="#00E58A" stroke-width="5" stroke-dasharray="14 10"/>
+            <text x="122" y="539" fill="#475569">대피 경로</text>
+            <rect x="200" y="528" width="14" height="14" fill="#00E58A" rx="2"/>
+            <text x="220" y="539" fill="#475569">비상구</text>
+            <circle cx="287" cy="535" r="7" fill="#6628E1"/>
+            <text x="300" y="539" fill="#475569">현재 위치</text>
+          </g>
+
+          <!-- 블루프린트 타이틀 박스 -->
+          <g>
+            <text x="75" y="80" fill="#64748B" font-family="monospace" font-size="11" opacity="0.7">DWG. NO. EVAC-1F-001</text>
+            <text x="825" y="80" text-anchor="end" fill="#64748B" font-family="monospace" font-size="11" opacity="0.7">SCALE 1:200</text>
+          </g>
+        </svg>
+      </div>
+      <div class="evac-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16.5" r="1" fill="currentColor"/></svg>
+        <span>화재·비상 상황 시 <b>가장 가까운 비상구(녹색)</b>를 향해 침착하게 대피하세요. 엘리베이터 사용 금지 · 낮은 자세 유지 · 대피 후 지정 집결지로 이동.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 시설 위치 MODAL (응급구급함/소화기/AED 공용) ============== -->
+<div class="modal-overlay" id="facilityOverlay">
+  <div class="modal-box" style="max-width: 1000px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" id="facModalIcon">
+          <!-- JS로 아이콘 주입 -->
+        </div>
+        <div>
+          <div class="modal-head-title" id="facModalTitle">시설 위치 안내도</div>
+          <div class="modal-head-sub" id="facModalSub">고양시사업장 · 전시장 1F</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('facilityOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="evac-blueprint">
+        <svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="bp-grid2" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M30 0H0V30" fill="none" stroke="rgba(15,23,42,0.06)" stroke-width="1"/>
+            </pattern>
+            <pattern id="bp-grid-lg2" width="150" height="150" patternUnits="userSpaceOnUse">
+              <path d="M150 0H0V150" fill="none" stroke="rgba(15,23,42,0.1)" stroke-width="1.2"/>
+            </pattern>
+          </defs>
+          <rect width="900" height="560" fill="#F8FAFC"/>
+          <rect width="900" height="560" fill="url(#bp-grid2)"/>
+          <rect width="900" height="560" fill="url(#bp-grid-lg2)"/>
+          <rect x="60" y="50" width="780" height="460" fill="none" stroke="#64748B" stroke-width="3"/>
+          <g stroke="#94A3B8" stroke-width="1.6" fill="none">
+            <rect x="100" y="90" width="150" height="120"/>
+            <rect x="100" y="230" width="150" height="120"/>
+            <rect x="300" y="90" width="300" height="200"/>
+            <rect x="650" y="90" width="150" height="120"/>
+            <rect x="650" y="230" width="150" height="120"/>
+            <rect x="300" y="330" width="300" height="120"/>
+          </g>
+          <g fill="#475569" font-family="monospace" font-size="13" text-anchor="middle">
+            <text x="175" y="155">부스 A</text>
+            <text x="175" y="295">부스 B</text>
+            <text x="450" y="195">중앙 전시홀</text>
+            <text x="725" y="155">부스 C</text>
+            <text x="725" y="295">부스 D</text>
+            <text x="450" y="395">세미나실</text>
+          </g>
+          <!-- 비상구 (항상 표시) -->
+          <g>
+            <rect x="130" y="505" width="60" height="22" fill="#2e6e54" rx="3"/>
+            <text x="160" y="521" text-anchor="middle" fill="#cfeede" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">비상구</text>
+            <rect x="710" y="505" width="60" height="22" fill="#2e6e54" rx="3"/>
+            <text x="740" y="521" text-anchor="middle" fill="#cfeede" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">비상구</text>
+            <rect x="420" y="33" width="60" height="22" fill="#2e6e54" rx="3"/>
+            <text x="450" y="49" text-anchor="middle" fill="#cfeede" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">비상구</text>
+          </g>
+          <!-- 현재 위치 -->
+          <g>
+            <circle cx="450" cy="470" r="8" fill="#ffffff"/>
+            <text x="450" y="496" text-anchor="middle" fill="#ffffff" font-family="Pretendard, sans-serif" font-size="13" font-weight="400">현재 위치</text>
+          </g>
+          <!-- 시설 마커 (JS 주입) -->
+          <g id="facMarkers"></g>
+          <text x="75" y="80" fill="#64748B" font-family="monospace" font-size="11" opacity="0.7" id="facDwgNo">DWG. NO. FAC-1F-001</text>
+          <text x="825" y="80" text-anchor="end" fill="#64748B" font-family="monospace" font-size="11" opacity="0.7">SCALE 1:200</text>
+        </svg>
+      </div>
+      <div class="evac-note" id="facNote">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16.5" r="1" fill="currentColor"/></svg>
+        <span id="facNoteText"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============== 비상연락망 MODAL ============== -->
+<div class="modal-overlay" id="contactOverlay">
+  <div class="modal-box" style="max-width: 1000px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(0,217,255,0.12);border:1px solid rgba(0,217,255,0.3);color:var(--cyan);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">비상연락망</div>
+          <div class="modal-head-sub">고양시사업장 · EMERGENCY CONTACT · QR 스캔 → 전화 연결</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('contactOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="contact-board">
+        <div class="hotline-strip">
+          <div class="hotline-card critical"><div class="hotline-label">FIRE · EMS</div><div class="hotline-number">119</div><div class="hotline-name">소방·응급의료</div></div>
+          <div class="hotline-card warn"><div class="hotline-label">POLICE</div><div class="hotline-number">112</div><div class="hotline-name">경찰</div></div>
+          <div class="hotline-card info"><div class="hotline-label">MEDICAL</div><div class="hotline-number">1339</div><div class="hotline-name">응급의료상담</div></div>
+          <div class="hotline-card primary"><div class="hotline-label">SITE · SOS</div><div class="hotline-number">#7777</div><div class="hotline-name">사내 안전상황실</div></div>
+          <div class="hotline-card security"><div class="hotline-label">SECURITY 24h</div><div class="hotline-number">#5500</div><div class="hotline-name">보안실 (정문)</div></div>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-section">
+            <div class="contact-section-title">안전보건 관리조직<span class="contact-section-meta">8 PERSON · ALL ACTIVE</span></div>
+            <div class="contact-scroll">
+              <div class="org-card lead"><div class="org-avatar role-lead">총괄</div><div class="org-info"><div class="org-role">안전보건 총괄책임자</div><div class="org-name">박*훈<span class="pos">상무 · 공장장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-safe">안전</div><div class="org-info"><div class="org-role">안전관리자 (선임)</div><div class="org-name">김*우<span class="pos">팀장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-health">보건</div><div class="org-info"><div class="org-role">보건관리자 · 산업간호사</div><div class="org-name">이*민<span class="pos">팀장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-fire">소방</div><div class="org-info"><div class="org-role">소방안전관리자</div><div class="org-name">최*진<span class="pos">과장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-chem">화학</div><div class="org-info"><div class="org-role">화학물질 · MSDS 담당</div><div class="org-name">정*린<span class="pos">과장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-elec">전기</div><div class="org-info"><div class="org-role">전기안전관리자</div><div class="org-name">조*범<span class="pos">과장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-fac">설비</div><div class="org-info"><div class="org-role">설비 · 시설 관리</div><div class="org-name">한*윤<span class="pos">팀장</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="org-card"><div class="org-avatar role-env">환경</div><div class="org-info"><div class="org-role">환경 · 폐기물 관리</div><div class="org-name">윤*영<span class="pos">대리</span></div></div><div class="qr-call" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+            </div>
+          </div>
+          <div class="contact-section">
+            <div class="contact-section-title">상황별 비상연락망<span class="contact-section-meta">7 SCENARIOS · P1~P3</span></div>
+            <div class="contact-scroll">
+              <div class="scenario-card priority-p1"><div class="scenario-icon fire"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14a8 8 0 0 0 16 0c0-4.16-2-7.86-6.5-13.33zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg></div><div class="scenario-meta"><div class="scenario-title">화재 · 폭발</div><div class="scenario-priority p1">P1 · 즉시</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="ext">119</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">최*진</span><span class="role">소방</span></span><span class="scenario-contact"><span class="order">3</span><span class="nm">박*훈</span><span class="role">총괄</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="scenario-card priority-p1"><div class="scenario-icon chem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L15 8.5V2"/><path d="M8 2h8"/><line x1="7" y1="14" x2="17" y2="14"/></svg></div><div class="scenario-meta"><div class="scenario-title">화학물질 누출</div><div class="scenario-priority p1">P1 · 즉시</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="nm">정*린</span><span class="role">MSDS</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">김*우</span><span class="role">안전</span></span><span class="scenario-contact"><span class="order">3</span><span class="role">화학안전원 QR 연결</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="scenario-card priority-p1"><div class="scenario-icon fall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M14 8l-3 6 3 4M11 14l-4 1"/></svg></div><div class="scenario-meta"><div class="scenario-title">추락 · 중대재해</div><div class="scenario-priority p1">P1 · 즉시</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="ext">119</span><span class="role">/</span><span class="ext">1339</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">이*민</span><span class="role">간호사</span></span><span class="scenario-contact"><span class="order">3</span><span class="nm">김*우</span><span class="role">안전</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="scenario-card priority-p1"><div class="scenario-icon gas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 12c0 4-2 6-2 6s-2-2-2-6 2-9 2-9 2 5 2 9z"/><circle cx="12" cy="18" r="4"/></svg></div><div class="scenario-meta"><div class="scenario-title">가스 누출 · 유독성</div><div class="scenario-priority p1">P1 · 즉시</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="role">가스안전공사 QR</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">한*윤</span><span class="role">설비</span></span><span class="scenario-contact"><span class="order">3</span><span class="nm">이*민</span><span class="role">보건</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="scenario-card priority-p1"><div class="scenario-icon sealed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="21"/></svg></div><div class="scenario-meta"><div class="scenario-title">밀폐공간 사고</div><div class="scenario-priority p1">P1 · 즉시</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="ext">119</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">김*우</span><span class="role">안전</span></span><span class="scenario-contact"><span class="order">3</span><span class="nm">이*민</span><span class="role">간호사</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="scenario-card"><div class="scenario-icon medical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="scenario-meta"><div class="scenario-title">의료 응급상황</div><div class="scenario-priority p2">P2 · 신속</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="ext">119</span><span class="role">/</span><span class="ext">1339</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">이*민</span><span class="role">간호사</span></span><span class="scenario-contact"><span class="order">3</span><span class="role">인근 응급실</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+              <div class="scenario-card"><div class="scenario-icon power"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="scenario-meta"><div class="scenario-title">정전 · 설비 중단</div><div class="scenario-priority p3">P3 · 일반</div></div><div class="scenario-contacts"><span class="scenario-contact"><span class="order">1</span><span class="nm">조*범</span><span class="role">전기</span></span><span class="scenario-contact"><span class="order">2</span><span class="nm">한*윤</span><span class="role">설비</span></span><span class="scenario-contact"><span class="order">3</span><span class="role">한전</span><span class="ext">123</span></span></div><div class="scenario-qr" title="QR 스캔하여 전화 연결"><svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect width="27" height="27" fill="#fff"/><path fill="#0a1828" d="M1 1h7v1h-7zM10 1h1v1h-1zM13 1h1v1h-1zM16 1h2v1h-2zM19 1h7v1h-7zM1 2h1v1h-1zM7 2h1v1h-1zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM25 2h1v1h-1zM1 3h1v1h-1zM3 3h3v1h-3zM7 3h1v1h-1zM9 3h3v1h-3zM13 3h2v1h-2zM16 3h1v1h-1zM19 3h1v1h-1zM21 3h3v1h-3zM25 3h1v1h-1zM1 4h1v1h-1zM3 4h3v1h-3zM7 4h1v1h-1zM9 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h3v1h-3zM25 4h1v1h-1zM1 5h1v1h-1zM3 5h3v1h-3zM7 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM16 5h2v1h-2zM19 5h1v1h-1zM21 5h3v1h-3zM25 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM11 6h3v1h-3zM16 6h1v1h-1zM19 6h1v1h-1zM25 6h1v1h-1zM1 7h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h7v1h-7zM9 8h3v1h-3zM13 8h1v1h-1zM15 8h3v1h-3zM1 9h1v1h-1zM7 9h1v1h-1zM9 9h2v1h-2zM18 9h2v1h-2zM22 9h3v1h-3zM1 10h2v1h-2zM4 10h2v1h-2zM8 10h1v1h-1zM10 10h2v1h-2zM13 10h2v1h-2zM17 10h2v1h-2zM21 10h2v1h-2zM1 11h3v1h-3zM6 11h2v1h-2zM9 11h3v1h-3zM13 11h4v1h-4zM18 11h2v1h-2zM21 11h2v1h-2zM24 11h2v1h-2zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h3v1h-3zM14 12h1v1h-1zM16 12h2v1h-2zM19 12h1v1h-1zM24 12h2v1h-2zM2 13h2v1h-2zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM18 13h2v1h-2zM25 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM10 14h2v1h-2zM16 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h5v1h-5zM1 16h1v1h-1zM5 16h1v1h-1zM8 16h2v1h-2zM12 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM6 17h4v1h-4zM12 17h1v1h-1zM16 17h6v1h-6zM23 17h3v1h-3zM9 18h1v1h-1zM13 18h5v1h-5zM21 18h1v1h-1zM24 18h1v1h-1zM1 19h7v1h-7zM12 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM1 20h1v1h-1zM7 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM17 20h1v1h-1zM21 20h1v1h-1zM24 20h1v1h-1zM1 21h1v1h-1zM3 21h3v1h-3zM7 21h1v1h-1zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h7v1h-7zM23 21h2v1h-2zM1 22h1v1h-1zM3 22h3v1h-3zM7 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM23 22h1v1h-1zM25 22h1v1h-1zM1 23h1v1h-1zM3 23h3v1h-3zM7 23h1v1h-1zM11 23h3v1h-3zM16 23h1v1h-1zM18 23h1v1h-1zM25 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM25 24h1v1h-1zM1 25h7v1h-7zM9 25h2v1h-2zM14 25h4v1h-4zM19 25h3v1h-3zM25 25h1v1h-1z"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============== MSDS 열람 MODAL (목록) ============== -->
+<div class="modal-overlay" id="msdsListOverlay">
+  <div class="modal-box" style="max-width: 920px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon msds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L15 8.5V2"/><path d="M8 2h8"/><line x1="7" y1="14" x2="17" y2="14"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">MSDS 열람 · 물질안전보건자료</div>
+          <div class="modal-head-sub">고양시사업장 · 화학물질 4종 · 클릭하여 상세 조회</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('msdsListOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="msds-list">
+        <div class="msds-list-item" onclick="closeModal('msdsListOverlay'); openMSDS('염산')">
+          <div class="msds-list-ghs">⚠</div>
+          <div class="msds-list-info"><div class="msds-list-name">염산 (Hydrochloric acid)</div><div class="msds-list-cas">CAS 7647-01-0 · HCl · UN1789</div></div>
+          <div class="msds-list-sig">위험</div>
+        </div>
+        <div class="msds-list-item" onclick="closeModal('msdsListOverlay'); openMSDS('황산')">
+          <div class="msds-list-ghs">⚠</div>
+          <div class="msds-list-info"><div class="msds-list-name">황산 (Sulfuric acid)</div><div class="msds-list-cas">CAS 7664-93-9 · H₂SO₄ · UN1830</div></div>
+          <div class="msds-list-sig">위험</div>
+        </div>
+        <div class="msds-list-item" onclick="closeModal('msdsListOverlay'); openMSDS('에틸 알코올')">
+          <div class="msds-list-ghs">⚠</div>
+          <div class="msds-list-info"><div class="msds-list-name">에탄올 (Ethanol)</div><div class="msds-list-cas">CAS 64-17-5 · C₂H₅OH · UN1170</div></div>
+          <div class="msds-list-sig">위험</div>
+        </div>
+        <div class="msds-list-item" onclick="closeModal('msdsListOverlay'); openMSDS('락카페인트 스프레이 (육각)')">
+          <div class="msds-list-ghs">⚠</div>
+          <div class="msds-list-info"><div class="msds-list-name">락카페인트 스프레이</div><div class="msds-list-cas">혼합물 · Mixture · UN1950</div></div>
+          <div class="msds-list-sig">위험</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 위험성평가 결과 MODAL ============== -->
+<div class="modal-overlay" id="riskOverlay">
+  <div class="modal-box" style="max-width: 960px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(255,59,71,0.12);border:1px solid rgba(255,59,71,0.3);color:var(--red);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.86L1.82 18a2 2 0 0 0 1.7 3h16.96a2 2 0 0 0 1.7-3L13.7 3.86a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">위험성평가 결과</div>
+          <div class="modal-head-sub">정밀가공 공정 (PRC-19) · 평가일 2026-05-12 · 4M 기법</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('riskOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="risk-summary">
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--red);">2</div><div class="risk-sum-lbl">높음 (15+)</div></div>
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--amber);">3</div><div class="risk-sum-lbl">중간 (8~12)</div></div>
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--green);">4</div><div class="risk-sum-lbl">낮음 (1~6)</div></div>
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--cyan);">9</div><div class="risk-sum-lbl">총 위험요인</div></div>
+      </div>
+      <table class="risk-table">
+        <thead><tr><th>유해·위험요인</th><th>가능성</th><th>중대성</th><th>위험성</th><th>개선대책</th></tr></thead>
+        <tbody>
+          <tr><td>고속 회전체 협착·말림</td><td>3</td><td>5</td><td><span class="risk-badge high">15 높음</span></td><td>방호덮개 설치·연동장치</td></tr>
+          <tr><td>화학물질(염산) 누출 노출</td><td>3</td><td>5</td><td><span class="risk-badge high">15 높음</span></td><td>국소배기·내산 PPE</td></tr>
+          <tr><td>절삭칩 비산 안구 손상</td><td>4</td><td>3</td><td><span class="risk-badge mid">12 중간</span></td><td>보안경 착용 의무화</td></tr>
+          <tr><td>소음(76dB) 청력 영향</td><td>3</td><td>3</td><td><span class="risk-badge mid">9 중간</span></td><td>귀마개·소음원 격리</td></tr>
+          <tr><td>고소작업 추락</td><td>2</td><td>4</td><td><span class="risk-badge mid">8 중간</span></td><td>안전대·작업발판</td></tr>
+          <tr><td>중량물 취급 근골격계</td><td>3</td><td>2</td><td><span class="risk-badge low">6 낮음</span></td><td>운반보조구·작업순환</td></tr>
+          <tr><td>전기 감전</td><td>2</td><td>3</td><td><span class="risk-badge low">6 낮음</span></td><td>접지·누전차단기</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============== AI 현장 상황 정보 MODAL (부스 TopView 블루프린트) ============== -->
+<div class="modal-overlay" id="aiSiteOverlay">
+  <div class="modal-box" style="max-width: 1000px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(0,229,138,0.12);border:1px solid rgba(0,229,138,0.3);color:var(--green);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V4h6v3"/><circle cx="9" cy="13" r="1.3" fill="currentColor"/><circle cx="15" cy="13" r="1.3" fill="currentColor"/><path d="M9 17h6"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">AI 현장 상황 정보 열람</div>
+          <div class="modal-head-sub">전시 부스 11m × 6m · TOP VIEW · IoT 센서 배치도 · VLM 분석</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('aiSiteOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="evac-blueprint">
+        <svg viewBox="0 0 920 540" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="ai-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="rgba(120,190,255,0.12)" stroke-width="1"/></pattern>
+          </defs>
+          <rect width="920" height="540" fill="#0a2540"/>
+          <rect width="920" height="540" fill="url(#ai-grid)"/>
+          <!-- 부스 외곽 11m x 6m (60~860 = 800px=11m, 60~500=440px=6m) -->
+          <rect x="60" y="60" width="800" height="420" fill="none" stroke="#9ecbff" stroke-width="3"/>
+          <!-- 치수선 -->
+          <text x="460" y="40" text-anchor="middle" fill="#9ecbff" font-family="monospace" font-size="14">11,000 mm</text>
+          <text x="30" y="275" text-anchor="middle" fill="#9ecbff" font-family="monospace" font-size="14" transform="rotate(-90 30 275)">6,000 mm</text>
+          <!-- 내부 존 구획 -->
+          <g stroke="#6fa8e0" stroke-width="1.4" fill="none" stroke-dasharray="5 4">
+            <rect x="90" y="90" width="340" height="180"/>
+            <rect x="470" y="90" width="350" height="180"/>
+            <rect x="90" y="300" width="730" height="150"/>
+          </g>
+          <g fill="#6fa8e0" font-family="Pretendard, sans-serif" font-size="14" text-anchor="middle">
+            <text x="260" y="115">정밀가공 시연존</text>
+            <text x="645" y="115">절단·용접 시연존</text>
+            <text x="455" y="325">관람객 통로 · 상담 구역</text>
+          </g>
+
+          <!-- 온습도계 아이콘 2개 -->
+          <g class="ai-marker" style="cursor:pointer;" onclick="openEnvDetail('TH-01','정밀가공 시연존')">
+            <circle cx="160" cy="200" r="22" fill="#FF9000" opacity="0.15"/>
+            <circle cx="160" cy="200" r="18" fill="#0a2540" stroke="#FF9000" stroke-width="2"/>
+            <path d="M162 192a2 2 0 0 0-4 0v9a3.5 3.5 0 1 0 4 0z" fill="none" stroke="#FF9000" stroke-width="1.6"/>
+            <circle cx="160" cy="203" r="2.5" fill="#FF9000"/>
+            <text x="160" y="237" text-anchor="middle" fill="#FF9000" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">온습도 ①</text>
+          </g>
+          <g class="ai-marker" style="cursor:pointer;" onclick="openEnvDetail('TH-02','절단·용접 시연존')">
+            <circle cx="740" cy="200" r="22" fill="#FF9000" opacity="0.15"/>
+            <circle cx="740" cy="200" r="18" fill="#0a2540" stroke="#FF9000" stroke-width="2"/>
+            <path d="M742 192a2 2 0 0 0-4 0v9a3.5 3.5 0 1 0 4 0z" fill="none" stroke="#FF9000" stroke-width="1.6"/>
+            <circle cx="740" cy="203" r="2.5" fill="#FF9000"/>
+            <text x="740" y="237" text-anchor="middle" fill="#FF9000" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">온습도 ②</text>
+          </g>
+
+          <!-- CCTV 아이콘 2개 -->
+          <g class="ai-marker" style="cursor:pointer;" onclick="openCCTVFor('CAM-03 · 정밀가공 라인')">
+            <circle cx="120" cy="110" r="20" fill="#00D9FF" opacity="0.15"/>
+            <circle cx="120" cy="110" r="17" fill="#0a2540" stroke="#00D9FF" stroke-width="2"/>
+            <g transform="translate(110,103) scale(0.6)" stroke="#00D9FF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l13-3 1.5 5.5L3.5 12.5 2 7z"/><circle cx="8" cy="9" r="1.4" fill="#00D9FF" stroke="none"/><path d="M5 13v3a2 2 0 0 0 2 2h2"/></g>
+            <text x="120" y="145" text-anchor="middle" fill="#00D9FF" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">CAM-03</text>
+          </g>
+          <g class="ai-marker" style="cursor:pointer;" onclick="openCCTVFor('CAM-04 · 절단기 작업존')">
+            <circle cx="800" cy="110" r="20" fill="#00D9FF" opacity="0.15"/>
+            <circle cx="800" cy="110" r="17" fill="#0a2540" stroke="#00D9FF" stroke-width="2"/>
+            <g transform="translate(790,103) scale(0.6)" stroke="#00D9FF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l13-3 1.5 5.5L3.5 12.5 2 7z"/><circle cx="8" cy="9" r="1.4" fill="#00D9FF" stroke="none"/><path d="M5 13v3a2 2 0 0 0 2 2h2"/></g>
+            <text x="800" y="145" text-anchor="middle" fill="#00D9FF" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">CAM-04</text>
+          </g>
+
+          <!-- 심박 아이콘 2개 (작업자 위치) -->
+          <g class="ai-marker" style="cursor:pointer;" onclick="openWatchWorker('이*학','WATCH-01','정밀가공 시연존')">
+            <circle cx="300" cy="200" r="20" fill="#F67676" opacity="0.18"><animate attributeName="r" values="17;26;17" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.35;0;0.35" dur="1.4s" repeatCount="indefinite"/></circle>
+            <circle cx="300" cy="200" r="17" fill="#0a2540" stroke="#F67676" stroke-width="2"/>
+            <path d="M291 200h3l2 4 3-8 2 4h3" fill="none" stroke="#F67676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="300" y="237" text-anchor="middle" fill="#F67676" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">심박 W-01</text>
+          </g>
+          <g class="ai-marker" style="cursor:pointer;" onclick="openWatchWorker('전*조','WATCH-02','절단·용접 시연존')">
+            <circle cx="600" cy="200" r="20" fill="#F67676" opacity="0.18"><animate attributeName="r" values="17;26;17" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.35;0;0.35" dur="1.4s" repeatCount="indefinite"/></circle>
+            <circle cx="600" cy="200" r="17" fill="#0a2540" stroke="#F67676" stroke-width="2"/>
+            <path d="M591 200h3l2 4 3-8 2 4h3" fill="none" stroke="#F67676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="600" y="237" text-anchor="middle" fill="#F67676" font-family="Pretendard, sans-serif" font-size="12" font-weight="700">심박 W-02</text>
+          </g>
+
+          <text x="75" y="468" fill="#9ecbff" font-family="monospace" font-size="11" opacity="0.7">DWG. NO. BOOTH-TOP-001</text>
+          <text x="845" y="468" text-anchor="end" fill="#9ecbff" font-family="monospace" font-size="11" opacity="0.7">SCALE 1:50</text>
+        </svg>
+      </div>
+      <div class="ai-site-legend">
+        <span class="ais-leg"><span class="ais-dot" style="background:#FF9000;"></span> 온습도계 ×2</span>
+        <span class="ais-leg"><span class="ais-dot" style="background:#00D9FF;"></span> CCTV ×2</span>
+        <span class="ais-leg"><span class="ais-dot" style="background:#F67676;"></span> 심박센서(작업자) ×2</span>
+        <span class="ais-leg-note">VLM이 CCTV 영상과 IoT 센서를 융합 분석하여 실시간 위험 상황을 감지합니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 온습도 상세 MODAL ============== -->
+<div class="modal-overlay" id="envDetailOverlay" style="z-index:1001;">
+  <div class="modal-box" style="max-width: 720px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(255,111,44,0.12);border:1px solid rgba(255,111,44,0.3);color:var(--orange);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a2 2 0 0 0-4 0v10.5a4 4 0 1 0 4 0V4z"/><circle cx="12" cy="17" r="2.2" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">온습도 센서 상세</div>
+          <div class="modal-head-sub" id="envDetailSub">TH-01 · 정밀가공 시연존</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('envDetailOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="env-detail-grid">
+        <div class="env-detail-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF9000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a2 2 0 0 0-4 0v10.5a4 4 0 1 0 4 0V4z"/><circle cx="12" cy="17" r="2.2" fill="#FF9000"/></svg>
+          <div class="env-detail-val" id="envDetailTemp" style="color:var(--orange);">27.4<small>°C</small></div>
+          <div class="env-detail-lbl">현재 온도</div>
+          <div class="env-detail-range">적정 18~28°C</div>
+        </div>
+        <div class="env-detail-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00D9FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>
+          <div class="env-detail-val" id="envDetailHum" style="color:var(--cyan);">58<small>%</small></div>
+          <div class="env-detail-lbl">상대 습도</div>
+          <div class="env-detail-range">적정 40~60%</div>
+        </div>
+        <div class="env-detail-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFB800" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h7"/></svg>
+          <div class="env-detail-val" style="color:var(--amber);">76<small>dB</small></div>
+          <div class="env-detail-lbl">소음 레벨</div>
+          <div class="env-detail-range">기준 ≤ 85dB</div>
+        </div>
+        <div class="env-detail-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00E58A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div class="env-detail-val" style="color:var(--green);">42<small>㎍</small></div>
+          <div class="env-detail-lbl">미세먼지 PM10</div>
+          <div class="env-detail-range">좋음 ≤ 80㎍</div>
+        </div>
+      </div>
+      <div class="evac-note" style="background:rgba(0,229,138,0.06);border-color:rgba(0,229,138,0.25);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <span style="color:var(--t-2);">모든 환경 지표가 <b style="color:var(--green);">정상 범위</b> 내에 있습니다. 측정 주기 1분 · 마지막 갱신 방금 전.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 공정(작업)관리 MODAL ============== -->
+<div class="modal-overlay" id="processOverlay">
+  <div class="modal-box" style="max-width: 960px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(139,124,255,0.12);border:1px solid rgba(139,124,255,0.3);color:var(--violet);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/><circle cx="8" cy="7" r="1.6" fill="currentColor" stroke="none"/><circle cx="14" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="10" cy="17" r="1.6" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">공정(작업)관리</div>
+          <div class="modal-head-sub">고양시사업장 · 금일 작업 현황 · PROCESS MANAGEMENT</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('processOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="risk-summary">
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--cyan);">5</div><div class="risk-sum-lbl">진행중 공정</div></div>
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--green);">3</div><div class="risk-sum-lbl">완료</div></div>
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--amber);">2</div><div class="risk-sum-lbl">대기</div></div>
+        <div class="risk-sum-card"><div class="risk-sum-val" style="color:var(--violet);">28</div><div class="risk-sum-lbl">투입 인원</div></div>
+      </div>
+      <table class="risk-table">
+        <thead><tr><th>공정코드</th><th>공정명</th><th>담당</th><th>인원</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr><td>PRC-19</td><td>정밀가공 라인</td><td>이*학</td><td>6</td><td><span class="risk-badge low">진행중</span></td></tr>
+          <tr><td>PRC-07</td><td>절단·용접 작업</td><td>전*조</td><td>5</td><td><span class="risk-badge low">진행중</span></td></tr>
+          <tr><td>PRC-12</td><td>도장 작업</td><td>김*수</td><td>4</td><td><span class="risk-badge mid">대기</span></td></tr>
+          <tr><td>PRC-23</td><td>조립 라인</td><td>박*후</td><td>8</td><td><span class="risk-badge low">진행중</span></td></tr>
+          <tr><td>PRC-31</td><td>물류·하역</td><td>최*재</td><td>5</td><td><span class="risk-badge low">진행중</span></td></tr>
+        </tbody>
+      </table>
+      <div class="evac-note" style="background:rgba(139,124,255,0.06);border-color:rgba(139,124,255,0.25);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v5l3 2"/></svg>
+        <span style="color:var(--t-2);">금일 작업 계획 대비 <b style="color:var(--violet);">진행률 62%</b> · 작업허가서(PTW) 발급 5건 · 위험작업 2건은 안전관리자 입회 하에 진행 중입니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== 현장 특이사항 관리 MODAL ============== -->
+<div class="modal-overlay" id="issueOverlay">
+  <div class="modal-box" style="max-width: 960px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-head-icon" style="background:rgba(255,111,44,0.12);border:1px solid rgba(255,111,44,0.3);color:var(--orange);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.86L1.82 18a2 2 0 0 0 1.7 3h16.96a2 2 0 0 0 1.7-3L13.7 3.86a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <div class="modal-head-title">현장 특이사항 관리</div>
+          <div class="modal-head-sub">고양시사업장 · 금일 특이사항 · SITE ISSUE LOG</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('issueOverlay')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="issue-list">
+        <div class="issue-item sev-high">
+          <div class="issue-time">09:24</div>
+          <div class="issue-body">
+            <div class="issue-title">정밀가공 라인 안전모 미착용 감지</div>
+            <div class="issue-desc">AI VISION이 PRC-19 구역에서 안전모 미착용 1건 감지 · 안전관리자 현장 조치 완료</div>
+          </div>
+          <span class="issue-badge high">조치완료</span>
+        </div>
+        <div class="issue-item sev-mid">
+          <div class="issue-time">10:47</div>
+          <div class="issue-body">
+            <div class="issue-title">절단·용접존 국소배기 풍량 저하</div>
+            <div class="issue-desc">2번 후드 풍량 기준치 85% · 설비팀 점검 요청 접수</div>
+          </div>
+          <span class="issue-badge mid">처리중</span>
+        </div>
+        <div class="issue-item sev-low">
+          <div class="issue-time">11:30</div>
+          <div class="issue-body">
+            <div class="issue-title">중앙 통로 자재 적치 정리</div>
+            <div class="issue-desc">관람객 통로 일부 자재 적치 → 즉시 정리 완료</div>
+          </div>
+          <span class="issue-badge low">완료</span>
+        </div>
+        <div class="issue-item sev-mid">
+          <div class="issue-time">13:15</div>
+          <div class="issue-body">
+            <div class="issue-title">작업자 심박 일시 상승 (W-02)</div>
+            <div class="issue-desc">절단·용접존 작업자 심박 128bpm 일시 도달 · 휴식 후 정상 회복</div>
+          </div>
+          <span class="issue-badge mid">모니터링</span>
+        </div>
+      </div>
+      <div class="evac-note" style="background:rgba(255,111,44,0.06);border-color:rgba(255,111,44,0.25);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.86L1.82 18a2 2 0 0 0 1.7 3h16.96a2 2 0 0 0 1.7-3L13.7 3.86a2 2 0 0 0-3.4 0z"/></svg>
+        <span style="color:var(--t-2);">금일 특이사항 <b style="color:var(--orange);">4건</b> · 조치완료 2건 · 처리중 2건 · 모든 사항은 실시간으로 안전상황실에 공유됩니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js" defer></script>
+
+</body>
+</html>
