@@ -12,7 +12,7 @@
 /* ============== CHARACTER ============== */
 .kiosk-character {
   position: absolute;
-  top: 149px;
+  top: 143px;
   right: 100px;
   width: auto;
   z-index: 10;
@@ -148,7 +148,7 @@
   border-radius: 2px;
 }
 .card-meta {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 12px; color: var(--t-3);
   letter-spacing: 1px;
 }
@@ -443,7 +443,7 @@
 }
 .cctv-fallback svg { width: 56px; height: 56px; opacity: 0.5; }
 .cctv-fallback-txt {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 14px;
   letter-spacing: 1px;
   color: var(--t-3);
@@ -467,7 +467,7 @@
   padding: 6px 12px;
   background: rgba(255, 59, 71, 0.85);
   border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 13px; font-weight: 800;
   color: #fff;
   letter-spacing: 1px;
@@ -483,7 +483,7 @@
 .cctv-timestamp {
   position: absolute;
   top: 16px; right: 16px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 14px;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0,0,0,0.9);
@@ -503,7 +503,7 @@
 .cctv-loc-proc {
   font-size: 13px; color: #b8d8ff;
   margin-top: 3px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
 }
 
 /* Camera selector chips */
@@ -539,7 +539,7 @@
 }
 .cctv-cam-info { min-width: 0; line-height: 1.3; }
 .cctv-cam-id {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 12px; font-weight: 700;
   color: var(--cyan);
 }
@@ -615,17 +615,17 @@
   width: 100%;
   border-radius: var(--r-md);
   overflow: hidden;
-  border: 1px solid rgba(15,23,42,0.15);
-  box-shadow: 0 4px 20px rgba(15,23,42,0.06);
-  background: #F8FAFC;
+  border: 1px solid rgba(15,23,42,0.3);
+  box-shadow: 0 4px 20px rgba(15,23,42,0.2);
+  background: #2D3748;
 }
 .evac-blueprint svg { width: 100%; height: auto; display: block; }
 .evac-note {
   margin-top: 16px;
   display: flex; align-items: flex-start; gap: 12px;
   padding: 14px 18px;
-  background: rgba(0,229,138,0.06);
-  border: 1px solid rgba(0,229,138,0.25);
+  background: #D8F4E9;
+  border: 1px solid #AADCC8;
   border-radius: var(--r-md);
   font-size: 14px; color: var(--t-2); line-height: 1.5;
 }
@@ -652,13 +652,13 @@
 }
 .msds-list-info { flex: 1; min-width: 0; }
 .msds-list-name { font-size: 18px; font-weight: 700; color: var(--t-1); }
-.msds-list-cas { font-size: 13px; color: var(--t-3); font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
+.msds-list-cas { font-size: 13px; color: var(--t-3); font-family: 'Pretendard', sans-serif; margin-top: 3px; }
 .msds-list-sig { font-size: 13px; font-weight: 800; color: var(--red); padding: 5px 14px; background: rgba(255,59,71,0.12); border-radius: 6px; flex-shrink: 0; }
 
 /* ===== 위험성평가 모달 ===== */
 .risk-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
 .risk-sum-card { text-align: center; padding: 16px 8px; background: var(--bg-card-hi); border: 1px solid var(--line); border-radius: var(--r-md); }
-.risk-sum-val { font-family: 'Oswald', sans-serif; font-size: 36px; font-weight: 700; line-height: 1; }
+.risk-sum-val { font-family: 'Pretendard', sans-serif; font-size: 36px; font-weight: 700; line-height: 1; }
 .risk-sum-lbl { font-size: 12px; color: var(--t-3); margin-top: 7px; font-weight: 600; }
 .risk-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .risk-table thead th {
@@ -667,9 +667,9 @@
 }
 .risk-table thead th:nth-child(2), .risk-table thead th:nth-child(3), .risk-table thead th:nth-child(4) { text-align: center; }
 .risk-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--line); color: var(--t-1); }
-.risk-table tbody td:nth-child(2), .risk-table tbody td:nth-child(3), .risk-table tbody td:nth-child(4) { text-align: center; font-family: 'JetBrains Mono', monospace; }
+.risk-table tbody td:nth-child(2), .risk-table tbody td:nth-child(3), .risk-table tbody td:nth-child(4) { text-align: center; font-family: 'Pretendard', sans-serif; }
 .risk-table tbody tr:hover { background: rgba(0,217,255,0.03); }
-.risk-badge { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 5px; white-space: nowrap; }
+.risk-badge { font-family: 'Pretendard', sans-serif; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 5px; white-space: nowrap; }
 .risk-badge.high { background: rgba(255,59,71,0.18); color: #ff7080; }
 .risk-badge.mid { background: rgba(255,184,0,0.18); color: #ffd066; }
 .risk-badge.low { background: rgba(0,229,138,0.15); color: #66f5b8; }
@@ -692,10 +692,10 @@
   border: 1px solid var(--line); border-radius: var(--r-md);
 }
 .env-detail-card svg { width: 34px; height: 34px; }
-.env-detail-val { font-family: 'Oswald', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #192A84; }
+.env-detail-val { font-family: 'Pretendard', sans-serif; font-size: 42px; font-weight: 700; line-height: 1; color: #192A84; }
 .env-detail-val small { font-size: 18px; opacity: 0.7; margin-left: 2px; }
 .env-detail-lbl { font-size: 14px; color: var(--t-2); font-weight: 600; }
-.env-detail-range { font-size: 12px; color: var(--t-3); font-family: 'JetBrains Mono', monospace; }
+.env-detail-range { font-size: 12px; color: var(--t-3); font-family: 'Pretendard', sans-serif; }
 
 /* ============== 비상연락망 (모달) ============== */
 .contact-board {
@@ -710,41 +710,32 @@
   background: linear-gradient(180deg, var(--bg-elev), var(--bg-base));
   position: relative; overflow: hidden;
 }
-.hotline-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--cyan); }
-.hotline-card.critical::before { background: var(--red); }
+.hotline-card::before { display: none; }
 .hotline-card.critical { background: linear-gradient(180deg, rgba(255,59,71,0.08), var(--bg-base)); }
-.hotline-card.warn::before { background: var(--amber); }
-.hotline-card.info::before { background: var(--green); }
-.hotline-card.primary::before { background: var(--cyan); }
-.hotline-card.security::before { background: var(--violet); }
-.hotline-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t-3); font-weight: 700; letter-spacing: 1.5px; }
-.hotline-number { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; color: var(--t-1); margin-top: 2px; line-height: 1; }
-.hotline-card.critical .hotline-number { color: var(--red); }
-.hotline-card.warn .hotline-number { color: var(--amber); }
-.hotline-card.info .hotline-number { color: var(--green); }
-.hotline-card.primary .hotline-number { color: var(--cyan); }
-.hotline-card.security .hotline-number { color: #b8aeff; }
+.hotline-label { font-family: 'Pretendard', sans-serif; font-size: 10px; color: var(--t-3); font-weight: 700; letter-spacing: 1.5px; }
+.hotline-number { font-family: 'Pretendard', sans-serif; font-size: 26px; font-weight: 700; color: var(--red); margin-top: 2px; line-height: 1; }
 .hotline-name { font-size: 12px; color: var(--t-2); margin-top: 5px; font-weight: 600; }
 
-.contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 16px; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .contact-section { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
 .contact-section-title {
   display: flex; align-items: center; gap: 10px;
-  font-size: 14px; font-weight: 700; color: var(--t-1); padding: 0 2px;
+  font-size: 18px; font-weight: 700; color: var(--t-1); padding: 16px 2px 0;
 }
-.contact-section-title::before { content: ''; width: 4px; height: 16px; background: var(--cyan); border-radius: 2px; }
-.contact-section-meta { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t-3); letter-spacing: 0.5px; }
+.contact-section-title::before { display: none; }
+.contact-section-meta { margin-left: auto; font-family: 'Pretendard', sans-serif; font-size: 10px; color: var(--t-3); letter-spacing: 0.5px; }
 .contact-scroll { display: flex; flex-direction: column; gap: 6px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
 .contact-scroll::-webkit-scrollbar { width: 6px; }
 .contact-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
 
 .org-card {
-  display: grid; grid-template-columns: 52px 1fr 56px; gap: 14px; align-items: center;
+  display: grid; grid-template-columns: 1fr 56px; gap: 14px; align-items: center;
   padding: 10px 14px; background: var(--bg-card-hi);
   border: 1px solid var(--line); border-radius: var(--r-sm);
 }
-.org-card.lead { background: linear-gradient(90deg, rgba(255,59,71,0.07), rgba(15,23,42,0.015)); border-left: 3px solid var(--red); }
-.org-avatar {
+.org-card.lead { background: linear-gradient(90deg, rgba(255,59,71,0.07), rgba(15,23,42,0.015)); }
+.org-avatar { display: none; }
+.org-avatar-hidden {
   width: 52px; height: 52px; border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Pretendard'; font-size: 14px; font-weight: 800; letter-spacing: -0.5px;
@@ -772,10 +763,9 @@
 .scenario-card {
   padding: 10px 14px; background: var(--bg-card-hi);
   border: 1px solid var(--line); border-radius: var(--r-sm);
-  display: grid; grid-template-columns: 44px 1fr 52px; gap: 8px 14px; align-items: center;
+  display: grid; grid-template-columns: 1fr 52px; gap: 8px 14px; align-items: center;
 }
-.scenario-card.priority-p1 { border-left: 3px solid var(--red); }
-.scenario-icon {
+.scenario-icon-old {
   grid-column: 1; grid-row: 1 / 3; width: 44px; height: 44px; border-radius: 9px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; align-self: center;
 }
@@ -787,20 +777,20 @@
 .scenario-icon.sealed { background: rgba(255,77,141,0.18); color: #ff95b8; }
 .scenario-icon.medical { background: rgba(0,229,138,0.18); color: #66f5b8; }
 .scenario-icon.power { background: rgba(168,188,214,0.15); color: #c4d2e2; }
-.scenario-meta { grid-column: 2; display: flex; align-items: center; gap: 10px; }
-.scenario-contacts { grid-column: 2; display: flex; flex-wrap: wrap; gap: 5px 14px; font-size: 14px; color: var(--t-2); }
+.scenario-meta { grid-column: 1; display: flex; align-items: center; gap: 10px; }
+.scenario-contacts { grid-column: 1; display: flex; flex-wrap: wrap; gap: 5px 14px; font-size: 14px; color: var(--t-2); }
 .scenario-title { font-size: 16px; color: var(--t-1); font-weight: 700; letter-spacing: -0.2px; }
-.scenario-priority { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; }
+.scenario-priority { font-family: 'Pretendard', sans-serif; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; }
 .scenario-priority.p1 { background: rgba(255,59,71,0.18); color: var(--red); }
 .scenario-priority.p2 { background: rgba(255,184,0,0.2); color: var(--amber); }
 .scenario-priority.p3 { background: rgba(0,229,138,0.18); color: var(--green); }
 .scenario-contact { display: inline-flex; align-items: center; gap: 6px; }
-.scenario-contact .order { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: rgba(0,217,255,0.18); color: var(--cyan); font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 700; border-radius: 4px; }
+.scenario-contact .order { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: rgba(0,217,255,0.18); color: var(--cyan); font-family: 'Pretendard', sans-serif; font-size: 12px; font-weight: 700; border-radius: 4px; }
 .scenario-contact .nm { color: var(--t-1); font-weight: 700; font-size: 14px; }
 .scenario-contact .role { color: var(--t-3); font-size: 13px; }
 .scenario-contact .ext { color: var(--cyan); font-weight: 700; font-size: 14px; }
 .scenario-qr {
-  grid-column: 3; grid-row: 1 / 3; width: 52px; height: 52px; border-radius: 8px;
+  grid-column: 2; grid-row: 1 / 3; width: 52px; height: 52px; border-radius: 8px;
   background: #fff; padding: 5px; display: flex; align-items: center; justify-content: center;
   cursor: pointer; flex-shrink: 0; align-self: center;
 }
@@ -834,7 +824,7 @@
 .hr-worker-name { font-size: 15px; font-weight: 700; color: var(--t-1); }
 .hr-worker-meta { font-size: 11px; color: var(--t-3); font-family: 'Pretendard', sans-serif; margin-top: 2px; }
 .hr-bpm { display: flex; align-items: baseline; gap: 4px; }
-.hr-bpm-val { font-family: 'Oswald', sans-serif; font-size: 30px; font-weight: 700; line-height: 1; }
+.hr-bpm-val { font-family: 'Pretendard', sans-serif; font-size: 30px; font-weight: 700; line-height: 1; }
 .hr-bpm-unit { font-size: 12px; color: var(--t-3); font-weight: 600; }
 .hr-worker .hr-bpm-val { color: #192A84; }
 .hr-worker.warn .hr-bpm-val { color: #192A84; }
@@ -842,7 +832,7 @@
 .hr-status-badge {
   font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px;
   margin-top: 4px; display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
 }
 .hr-worker .hr-status-badge { background: rgba(0,229,138,0.15); color: var(--green); }
 .hr-worker.warn .hr-status-badge { background: rgba(255,184,0,0.18); color: var(--amber); }
@@ -857,7 +847,7 @@
   border-bottom: 1px solid var(--line);
 }
 .msds-cas {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 13px; color: var(--orange);
   padding: 4px 10px; background: rgba(255,111,44,0.1);
   border: 1px solid rgba(255,111,44,0.3); border-radius: 6px;
@@ -915,7 +905,7 @@
 }
 .watch-chip:active { transform: scale(0.95); }
 .watch-chip svg { width: 16px; height: 16px; }
-.watch-none { color: var(--t-4); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.watch-none { color: var(--t-4); font-family: 'Pretendard', sans-serif; font-size: 12px; }
 
 /* ============== POLICY MENU ============== */
 .policy-menu {
@@ -969,7 +959,7 @@
   display: flex; align-items: baseline; gap: 6px;
 }
 .chart-stat-num {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 24px; font-weight: 600; color: var(--cyan);
 }
 .chart-stat-lbl {
@@ -1100,7 +1090,7 @@
 }
 .action-title.ko { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .action-title {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 46px; font-weight: 700;
   letter-spacing: 1px;
   color: var(--t-1);
@@ -1116,7 +1106,7 @@
   line-height: 1;
 }
 .action-tag {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 11px; letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.55);
   padding: 4px 10px;
@@ -1224,12 +1214,12 @@
   display: flex; align-items: center; gap: 10px;
 }
 .dash-col-title .total {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   color: var(--cyan); font-size: 24px;
   letter-spacing: 1px;
 }
 .dash-col-meta {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 12px; color: var(--t-3);
   letter-spacing: 1px;
 }
@@ -1263,7 +1253,7 @@
   font-weight: 700; letter-spacing: 0.5px;
 }
 .ws-value {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 36px; font-weight: 700;
   line-height: 1; margin-top: 6px;
   color: var(--t-1);
@@ -1276,7 +1266,7 @@
 .ws-sub {
   font-size: 11px; color: var(--t-3);
   margin-top: 4px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .worktype-grid {
@@ -1308,7 +1298,7 @@
   letter-spacing: 0.5px;
 }
 .wt-count {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 28px; font-weight: 700;
   color: var(--t-1);
   margin-top: 3px;
@@ -1356,7 +1346,7 @@
   padding: 13px 10px;
   border-bottom: 1px solid rgba(0, 217, 255, 0.06);
   text-align: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   color: var(--t-2);
   font-size: 15px;
 }
@@ -1380,7 +1370,7 @@
 }
 .hr-cell:active { background: rgba(0,217,255,0.08); }
 .hr-cell .hr-range {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   font-size: 14px;
   vertical-align: middle;
@@ -1469,7 +1459,7 @@
   position: absolute;
   top: 12px; right: 14px;
   z-index: 2;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 10px;
   color: var(--cyan);
   letter-spacing: 1px;
@@ -1504,7 +1494,7 @@
   width: 20px; height: 20px;
   background: var(--cyan);
   color: var(--bg-void);
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 11px; font-weight: 700;
   border-radius: 3px;
   flex-shrink: 0;
@@ -1551,7 +1541,7 @@
 .iot-card-loc {
   margin-top: 2px;
   font-size: 10px; color: var(--t-3);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   letter-spacing: 0.5px;
 }
 .iot-card-right {
@@ -1560,7 +1550,7 @@
   flex-shrink: 0;
 }
 .iot-card-val {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
@@ -1576,7 +1566,7 @@
   display: inline-flex; align-items: center; gap: 4px;
   font-size: 10px; font-weight: 700;
   padding: 2px 7px; border-radius: 4px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   letter-spacing: 0.5px;
 }
 .iot-card-status.online { background: rgba(0, 229, 138, 0.15); color: var(--green); }
@@ -1620,7 +1610,7 @@
 }
 
 .proc-no {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 15px;
   color: var(--t-3);
   font-weight: 700;
@@ -1778,7 +1768,7 @@
 
 .subproc-table tbody td:first-child {
   text-align: center;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 16px;
   color: var(--cyan);
   font-weight: 700;
@@ -1796,7 +1786,7 @@
 }
 .subproc-table .c-empty {
   color: var(--t-4);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   text-align: center;
 }
 
@@ -1893,29 +1883,18 @@
   transition: all 0.15s;
 }
 .hotline-card:active { transform: scale(0.985); }
-.hotline-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--cyan);
-}
-.hotline-card.critical::before { background: var(--red); }
+.hotline-card::before { display: none; }
 .hotline-card.critical { background: linear-gradient(180deg, rgba(255,59,71,0.08), var(--bg-base)); }
-.hotline-card.warn::before { background: var(--amber); }
-.hotline-card.info::before { background: var(--green); }
-.hotline-card.primary::before { background: var(--cyan); }
-.hotline-card.security::before { background: var(--violet); }
 
 .hotline-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 10px;
   color: var(--t-3);
   font-weight: 700;
   letter-spacing: 1.5px;
 }
 .hotline-number {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 28px;
   font-weight: 700;
   color: var(--t-1);
@@ -1923,14 +1902,7 @@
   line-height: 1;
   letter-spacing: 0.5px;
 }
-.hotline-card.critical .hotline-number {
-  color: var(--red);
-  text-shadow: 0 0 12px rgba(255,59,71,0.4);
-}
-.hotline-card.warn .hotline-number { color: var(--amber); }
-.hotline-card.info .hotline-number { color: var(--green); }
-.hotline-card.primary .hotline-number { color: var(--cyan); }
-.hotline-card.security .hotline-number { color: #b8aeff; }
+.hotline-number { color: var(--red); }
 .hotline-name {
   font-size: 12px;
   color: var(--t-2);
@@ -1943,7 +1915,7 @@
 .contact-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 14px;
   overflow: hidden;
   min-height: 0;
@@ -1957,21 +1929,18 @@
 }
 .contact-section-title {
   display: flex; align-items: center; gap: 10px;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--t-1);
-  padding: 0 2px;
+  padding: 16px 2px 0;
   flex-shrink: 0;
 }
 .contact-section-title::before {
-  content: '';
-  width: 4px; height: 16px;
-  background: var(--cyan);
-  border-radius: 2px;
+  display: none;
 }
 .contact-section-meta {
   margin-left: auto;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 10px;
   color: var(--t-3);
   font-weight: 500;
@@ -1992,7 +1961,7 @@
 /* Organization cards (LEFT) */
 .org-card {
   display: grid;
-  grid-template-columns: 52px 1fr 56px;
+  grid-template-columns: 1fr 56px;
   gap: 14px;
   align-items: center;
   padding: 12px 16px;
@@ -2004,10 +1973,9 @@
 .org-card:active { background: rgba(0,217,255,0.05); }
 .org-card.lead {
   background: linear-gradient(90deg, rgba(255,59,71,0.07), rgba(15,23,42,0.015));
-  border-left: 3px solid var(--red);
 }
 
-.org-avatar {
+.org-avatar-hidden {
   width: 52px; height: 52px;
   border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
@@ -2077,36 +2045,17 @@
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
   display: grid;
-  grid-template-columns: 44px 1fr 52px;
+  grid-template-columns: 1fr 52px;
   gap: 8px 14px;
   align-items: center;
 }
-.scenario-card.priority-p1 {
-  border-left: 3px solid var(--red);
-}
-.scenario-icon {
-  grid-column: 1;
-  grid-row: 1 / 3;
-  width: 44px; height: 44px;
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  align-self: center;
-}
-.scenario-icon svg { width: 22px; height: 22px; }
-.scenario-icon.fire    { background: rgba(255,59,71,0.18); color: #ff7080; }
-.scenario-icon.chem    { background: rgba(255,111,44,0.18); color: #ffa377; }
-.scenario-icon.fall    { background: rgba(139,124,255,0.18); color: #b8aeff; }
-.scenario-icon.gas     { background: rgba(255,184,0,0.18); color: #ffd066; }
-.scenario-icon.sealed  { background: rgba(255,77,141,0.18); color: #ff95b8; }
-.scenario-icon.medical { background: rgba(0,229,138,0.18); color: #66f5b8; }
-.scenario-icon.power   { background: rgba(168,188,214,0.15); color: #c4d2e2; }
+.scenario-icon { display: none; }
 
-.scenario-meta  { grid-column: 2; }
-.scenario-contacts { grid-column: 2; }
+.scenario-meta  { grid-column: 1; }
+.scenario-contacts { grid-column: 1; }
 
 .scenario-qr {
-  grid-column: 3;
+  grid-column: 2;
   grid-row: 1 / 3;
   width: 52px; height: 52px;
   border-radius: 8px;
@@ -2131,7 +2080,7 @@
   letter-spacing: -0.2px;
 }
 .scenario-priority {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Pretendard', sans-serif;
   font-size: 11px;
   font-weight: 800;
   padding: 3px 8px;
@@ -2155,7 +2104,7 @@
   width: 18px; height: 18px;
   background: rgba(0,217,255,0.18);
   color: var(--cyan);
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 12px;
   font-weight: 700;
   border-radius: 4px;
@@ -2200,7 +2149,7 @@
 }
 .footer-brand em {
   font-style: normal;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-weight: 400;
   margin-left: 4px;
 }
@@ -2384,7 +2333,7 @@
 .cctv-btn-item {
   display: inline-flex; align-items: center; justify-content: center;
   height: 40px; padding: 0 16px;
-  font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500;
+  font-family: 'Pretendard', sans-serif; font-size: 14px; font-weight: 500;
   color: rgba(255,255,255,0.55);
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
@@ -2677,7 +2626,7 @@
   border-radius: 10px;
 }
 .bh-env-card svg { width: 30px; height: 30px; }
-.bh-env-val { font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; }
+.bh-env-val { font-family: 'Pretendard', sans-serif; font-size: 32px; font-weight: 700; line-height: 1; }
 .bh-env-val small { font-size: 15px; opacity: 0.7; margin-left: 2px; }
 .bh-env-lbl { font-size: 13px; color: var(--t-3); font-weight: 600; }
 
@@ -2699,12 +2648,12 @@
 }
 .bh-cctv-cam:active { transform: scale(0.97); border-color: var(--cyan); }
 .bh-cam-icon { width: 64px; height: 64px; color: var(--cyan); }
-.bh-cam-name { font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 700; color: var(--t-1); line-height: 1; }
+.bh-cam-name { font-family: 'Pretendard', sans-serif; font-size: 22px; font-weight: 700; color: var(--t-1); line-height: 1; }
 .bh-cam-loc { font-size: 13px; color: var(--t-3); font-weight: 600; }
 .bh-cam-live {
   position: absolute; top: 12px; right: 12px;
   display: inline-flex; align-items: center; gap: 5px;
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  font-family: 'Pretendard', sans-serif; font-size: 10px; font-weight: 700;
   color: var(--red);
   padding: 3px 8px;
   background: rgba(255,59,71,0.12);
@@ -2741,7 +2690,7 @@
 .facility-btn-img { width: 48px; height: 48px; object-fit: contain; }
 .facility-btn-icon { font-size: 30px; line-height: 1; color: var(--brand-blue); }
 .sq-teal .facility-btn-icon { color: #3350AC; }
-.facility-btn-sq .facility-sub { font-size: 11px; font-weight: 400; color: #AAAAAA; font-family: 'Poppins', sans-serif; text-align: center; line-height: 1.1; }
+.facility-btn-sq .facility-sub { font-size: 11px; font-weight: 400; color: #AAAAAA; font-family: 'Pretendard', sans-serif; text-align: center; line-height: 1.1; }
 
 /* ============== 안전시설 위치 메뉴 (4개, 1줄) ============== */
 .facility-menu {
@@ -2783,7 +2732,7 @@
 }
 .facility-sub {
   font-size: 12px; font-weight: 400; color: #AAAAAA;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   text-align: center;
   line-height: 1.1;
 }
@@ -2823,7 +2772,7 @@
 .issue-item.sev-high { border-left-color: var(--red); }
 .issue-item.sev-mid { border-left-color: var(--amber); }
 .issue-item.sev-low { border-left-color: var(--green); }
-.issue-time { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: var(--cyan); flex-shrink: 0; width: 50px; }
+.issue-time { font-family: 'Pretendard', sans-serif; font-size: 15px; font-weight: 700; color: var(--cyan); flex-shrink: 0; width: 50px; }
 .issue-body { flex: 1; min-width: 0; }
 .issue-title { font-size: 16px; font-weight: 700; color: var(--t-1); }
 .issue-desc { font-size: 13px; color: var(--t-3); margin-top: 3px; }
@@ -2854,7 +2803,7 @@
 }
 .ai-head-icon svg { width: 28px; height: 28px; }
 .ai-title { font-size: 22px; font-weight: 800; color: var(--t-1); letter-spacing: -0.3px; }
-.ai-sub { font-size: 13px; color: var(--t-3); margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+.ai-sub { font-size: 13px; color: var(--t-3); margin-top: 3px; font-family: 'Pretendard', sans-serif; }
 .ai-status {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 700; color: var(--cyan);
@@ -2912,8 +2861,8 @@
 .ai-event.ok .ai-event-ico { background: rgba(0,229,138,0.15); color: var(--green); }
 .ai-event-info { flex: 1; min-width: 0; }
 .ai-event-name { font-size: 14px; font-weight: 700; color: var(--t-1); }
-.ai-event-meta { font-size: 11px; color: var(--t-3); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
-.ai-event-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--t-3); flex-shrink: 0; }
+.ai-event-meta { font-size: 11px; color: var(--t-3); margin-top: 2px; font-family: 'Pretendard', sans-serif; }
+.ai-event-time { font-family: 'Pretendard', sans-serif; font-size: 12px; color: var(--t-3); flex-shrink: 0; }
 
 .ai-stats {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
@@ -2925,7 +2874,7 @@
   border: 1px solid var(--line);
   border-radius: var(--r-md);
 }
-.ai-stat-val { font-family: 'Oswald', sans-serif; font-size: 30px; font-weight: 700; line-height: 1; }
+.ai-stat-val { font-family: 'Pretendard', sans-serif; font-size: 30px; font-weight: 700; line-height: 1; }
 .ai-stat-val.danger { color: var(--red); }
 .ai-stat-val.warn { color: var(--amber); }
 .ai-stat-val.ok { color: var(--green); }

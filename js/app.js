@@ -267,7 +267,7 @@ const FACILITY = {
   aed: {
     title: 'AED(자동심장충격기) 설치 위치 안내도',
     color: '#FFB800',
-    iconBg: 'rgba(255,184,0,0.12)', iconBorder: 'rgba(255,184,0,0.35)',
+    iconBg: 'rgba(255,184,0,0.2)', iconBorder: 'rgba(255,184,0,0.4)',
     dwg: 'DWG. NO. FAC-AED-1F',
     icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M13 7l-3 5h3l-1 4 4-6h-3z" fill="currentColor" stroke="none"/>',
     label: 'AED',
@@ -279,15 +279,7 @@ const FACILITY = {
 function openFacility(type) {
   const f = FACILITY[type];
   if (!f) return;
-  // 헤더 아이콘
-  const iconWrap = document.getElementById('facModalIcon');
-  iconWrap.style.background = f.iconBg;
-  iconWrap.style.border = '1px solid ' + f.iconBorder;
-  iconWrap.style.color = f.color;
-  iconWrap.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + f.icon + '</svg>';
-  // 타이틀/설명
   document.getElementById('facModalTitle').textContent = f.title;
-  document.getElementById('facModalSub').textContent = '고양시사업장 · 전시장 1F · ' + f.label.toUpperCase() + ' LOCATION';
   document.getElementById('facDwgNo').textContent = f.dwg;
   document.getElementById('facNoteText').innerHTML = f.note;
   // note 색상
@@ -304,9 +296,9 @@ function openFacility(type) {
     // 펄스 링
     const pulse = document.createElementNS(NS, 'circle');
     pulse.setAttribute('cx', x); pulse.setAttribute('cy', y);
-    pulse.setAttribute('r', '14'); pulse.setAttribute('fill', f.color); pulse.setAttribute('opacity', '0.25');
+    pulse.setAttribute('r', '9'); pulse.setAttribute('fill', f.color); pulse.setAttribute('opacity', '0.25');
     const a1 = document.createElementNS(NS, 'animate');
-    a1.setAttribute('attributeName', 'r'); a1.setAttribute('values', '12;24;12'); a1.setAttribute('dur', '1.8s'); a1.setAttribute('repeatCount', 'indefinite');
+    a1.setAttribute('attributeName', 'r'); a1.setAttribute('values', '8;16;8'); a1.setAttribute('dur', '1.8s'); a1.setAttribute('repeatCount', 'indefinite');
     const a2 = document.createElementNS(NS, 'animate');
     a2.setAttribute('attributeName', 'opacity'); a2.setAttribute('values', '0.45;0;0.45'); a2.setAttribute('dur', '1.8s'); a2.setAttribute('repeatCount', 'indefinite');
     pulse.appendChild(a1); pulse.appendChild(a2);
@@ -314,16 +306,23 @@ function openFacility(type) {
     // 마커 원
     const dot = document.createElementNS(NS, 'circle');
     dot.setAttribute('cx', x); dot.setAttribute('cy', y);
-    dot.setAttribute('r', '13'); dot.setAttribute('fill', f.color);
+    dot.setAttribute('r', '8'); dot.setAttribute('fill', f.color);
     dot.setAttribute('stroke', '#0a2540'); dot.setAttribute('stroke-width', '2');
     g.appendChild(dot);
-    // 라벨
+    // 사각형 라벨
+    const labelW = 52, labelH = 22;
+    const lx = x + 12, ly = y - labelH / 2;
+    const rect = document.createElementNS(NS, 'rect');
+    rect.setAttribute('x', lx); rect.setAttribute('y', ly);
+    rect.setAttribute('width', labelW); rect.setAttribute('height', labelH);
+    rect.setAttribute('fill', f.color); rect.setAttribute('fill-opacity', '0.6'); rect.setAttribute('rx', '3');
+    g.appendChild(rect);
     const txt = document.createElementNS(NS, 'text');
-    txt.setAttribute('x', x); txt.setAttribute('y', y + 4);
+    txt.setAttribute('x', lx + labelW / 2); txt.setAttribute('y', y + 5);
     txt.setAttribute('text-anchor', 'middle');
-    txt.setAttribute('fill', type === 'aed' || type === 'fire' ? '#0a2540' : '#fff');
+    txt.setAttribute('fill', '#000000');
     txt.setAttribute('font-family', 'Pretendard, sans-serif');
-    txt.setAttribute('font-size', type === 'aed' ? '8' : '10');
+    txt.setAttribute('font-size', '13');
     txt.setAttribute('font-weight', '800');
     txt.textContent = f.label;
     g.appendChild(txt);
