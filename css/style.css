@@ -1,4 +1,4 @@
-.kiosk {
+﻿.kiosk {
   width: 1080px;
   height: 1920px;
   display: grid;
@@ -334,7 +334,7 @@
 .cctv-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.80);
   z-index: 1002;
   display: none;
   align-items: center;
@@ -551,7 +551,7 @@
 /* ===== Generic modal (심박/MSDS/사진) ===== */
 .modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.80);
   z-index: 1000;
   display: none;
   align-items: center; justify-content: center;
@@ -2899,3 +2899,6 @@
 .policy-mini:active { transform: scale(0.97); border-color: var(--line-strong); }
 .policy-mini svg { width: 36px; height: 36px; flex-shrink: 0; }
 .policy-mini span { font-size: 20px; font-weight: 700; color: var(--t-1); line-height: 1.2; }
+
+/* SVG image click-through fix (thermometer marker on touchscreen) */
+.ai-marker image { pointer-events: none; }

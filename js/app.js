@@ -176,7 +176,7 @@ function openEnvDetail(sensorId, zone) {
   const hum = Math.floor(52 + Math.random() * 12);
   document.getElementById('envDetailTemp').innerHTML = temp + '<small>°C</small>';
   document.getElementById('envDetailHum').innerHTML = hum + '<small>%</small>';
-  document.getElementById('envDetailOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('envDetailOverlay').classList.add('open'), 0);
 }
 
 // 비상대피로 안내도 열기
